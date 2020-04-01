@@ -39,12 +39,42 @@ ggplot(Covid19,aes(x=lon,y=lat,size=cases))+geom_point()
 
 # Esercizio: zona con più alta densità di casi di Covid19
 # Creare dataset per spatstat
-Covid19ppp<-ppp(lon,lat,c(-180,180),c(-90,90))
-d<-density(Covid19ppp)
+covids<-ppp(lon,lat,c(-180,180),c(-90,90))
+d<-density(covids)
 plot(d)
-points(Covid19ppp,pch=19) # Mostare i punti Covid19 sulla mappa di densità
+points(covids,pch=19) # Mostare i punti Covid19 sulla mappa di densità
+
+# 1/04/20
+
+setwd("C:/lab")
+load("point_pattern.RData")
+ls() #per vedere cosa c'è nel file caricato
+library(spatstat)
+plot(d)
+
+# palette -> modificare colori del plot d; (100) per dire a r che voglio una scala di quei colori con 100 sfumature
+cl<-colorRampPalette(c('yellow','orange','red')) (100)
+plot(d,col=cl)
+
+# Esercizio: plot densità dal verde al blu
+bluverde<-colorRampPalette(c('blue','grey','green')) (200)
+plot(d,col=bluverde)
+
+# Mostare i punti Covid19 sulla mappa di densità
+points(covids)
 
 # Inserire nella mappa i confini degli stati
+coastlines<-readOGR("ne_10m_coastline.shp") #readOGR serve per leggere file vettoriali
+install.packages("rgdal")                   #rgdal serve per usare il comando readOGR
+library(rgdal)
+coastlines<-readOGR("ne_10m_coastline.shp")
+plot(coastlines,add=T)                      #add=T per aggiungere i confini al vecchio plot senza eliminarlo
+
+# Esercizio: plot della mappa di densità con una nuova colorazione e aggiunta e coastlines
+clr<-colorRampPalette(c('light blue','blue','pink','purple')) (400)
+plot(d,col=clr)
+plot(coastlines,add=T)
+
 
 
 
