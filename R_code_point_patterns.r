@@ -75,6 +75,110 @@ clr<-colorRampPalette(c('light blue','blue','pink','purple')) (400)
 plot(d,col=clr)
 plot(coastlines,add=T)
 
+setwd("C:/lab")
+load("C:/lab/point_ppattern.RData")
+library(spatstat)
+ls()
+library(rgdal)
+
+# Esercizio: plot mappa di densità
+coastlines<-readOGR("ne_10m_coastline.shp")
+clr<-colorRampPalette(c('light blue','blue','pink','purple')) (400)
+plot(d,col=clr,main="density")
+plot(coastlines,add=T)
+points(covids)
+
+# Interpolation
+covid
+marks(covids)<-covid$cases  # marks serve per associare i dati della categoria cases al pointpattern covids
+s<-Smooth(covids)           # Smooth serve per creare una mappa con i dati appena costruiti
+plot(s)
+
+# Esercizio: plot(s) con coastlines e punti
+cls<-colorRampPalette(c('light blue','blue','green'))(100)
+plot(s,col=cls,main="Cases")
+points(covids)
+plot(coastlines,add=T)
+
+### Mappa finale (multiframe con entrambi i plot che abbimo fatto)
+par(mfrow=c(2,1))
+
+# - densità
+clr<-colorRampPalette(c('light blue','blue','pink','purple')) (400)
+plot(d,col=clr,main="density")
+plot(coastlines,add=T)
+points(covids)
+
+# - interpolation
+cls<-colorRampPalette(c('light blue','blue','green'))(100)
+plot(s,col=cls,main="Cases")
+points(covids)
+plot(coastlines,add=T)
+
+### San Marino
+setwd("C:/lab")
+load("C:/lab/Tesi.RData")
+ls()
+head(Tesi)
+
+library(spatstat)
+attach(Tesi)
+
+# - Point pattern: x,y,c(xmin,xmax),c(ymin,ymax)
+summary(Tesi)    # sommario del dataset, posso trovare rapidamente le info principali
+# grazie a summary so che 12.42<x<12.46 e 43.91<y<43.94
+Tesippp<-ppp(Longitude,Latitude,c(12.41,12.47),c(43.90,43.95))
+
+# - Mappa densità
+dT<-density(Tesippp)
+dev.off 
+plot(dT)
+points(Tesippp,col="green")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
