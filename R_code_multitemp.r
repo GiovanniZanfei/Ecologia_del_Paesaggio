@@ -86,6 +86,38 @@ after<-c(48.2,51.8)
 output<-data.frame(cover,before,after)
 output
 
+# 5/05
+setwd("C:/lab")
+load("C:/lab/defor.RData")
+library(raster)
+library(ggplot2)
+install.packages("gridExtra")
+library(gridExtra)
+ls()
+
+# Riprendere mappe dell'altra volta
+par(mfrow=c(1,2))
+cl<-colorRampPalette(c('black','green'))(100)
+plot(d1c$map,col=cl)
+plot(d2c$map,col=cl)
+
+ls()
+output
+#        cover before after
+# 1 Agriculture   10.9  48.2
+# 2      Forest   89.1  51.8
+
+# Istogramma delle percentuali di copertura prima della deforestazione
+grafico1<-ggplot(output,aes(x=cover,y=before,color=cover)) +
+geom_bar(stat="identity",fill="white")
+
+# Esercizio: istogramma dopo deforestazione
+grafico2<-ggplot(output,aes(x=cover,y=after,color=cover)) +
+geom_bar(stat="identity",fill="white")
+
+# Esercizio: usare grid.arrange per creare un plot con grafico1 e grafico2
+#  Es: grid.arrange=> grid.arrange(plot1,plot2,nrow=1), questa funzione crea un plot con più grafici (equivalente di par)
+grid.arrange(grafico1,grafico2,nrow=1)
 
 
 
@@ -98,7 +130,21 @@ output
 
 
 
-plot(d2c$map, col=cl)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
