@@ -119,6 +119,42 @@ geom_bar(stat="identity",fill="white")
 #  Es: grid.arrange=> grid.arrange(plot1,plot2,nrow=1), questa funzione crea un plot con più grafici (equivalente di par)
 grid.arrange(grafico1,grafico2,nrow=1)
 
+# 6/05
+
+library(ggplot2)
+library(gridExtra)
+
+# Riprendere quanto fatto l'ultima volta
+grafico1<-ggplot(output,aes(x=cover,y=before,color=cover)) +
+geom_bar(stat="identity",fill="white")
+grafico2<-ggplot(output,aes(x=cover,y=after,color=cover)) +
+geom_bar(stat="identity",fill="white")
+grid.arrange(grafico1,grafico2,nrow=1)
+
+# Impongo al grafico il limite a y=100
+grafico1<-ggplot(output,aes(x=cover,y=before,color=cover)) +
+geom_bar(stat="identity",fill="white") + 
+ylim(0,100)
+grafico2 <- ggplot(output, aes(x=cover, y=after, color=cover)) + 
+geom_bar(stat="identity", fill="white") +
+ylim(0, 100)
+grid.arrange(grafico1,grafico2,nrow=1)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
