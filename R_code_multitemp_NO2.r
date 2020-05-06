@@ -49,11 +49,26 @@ plot(EN12,col=cl)
 plot(EN13,col=cl)
 # in alternativa si può fare: plot(EN01,EN02,EN03,EN04,EN05,EN06,EN07,EN08,EN09,EN10,EN11,EN12,EN13,col=cl)
 
+# 6/05
 
+setwd("C:/lab")
+load("EN.RData")
+ls()
+library(raster)
 
+setwd("C:/lab/esa_no2")
+rlist<-list.files(pattern=".png")
+rlist
 
+# la funzione "lapply" applica la funzione raster ad una lista di dati anzichè ad un solo file
+# lapply per caricare un lista di dati tutti insieme
+listafinale<-lapply(rlist,raster)
+listafinale
 
-
+# stack per trasformare la lista in una sorta di immagine di n bande (13 in questi caso), come se fosse un set multitemporale. Poi plottata
+EN<-stack(listafinale)
+cl<-colorRampPalette(c('red','orange',yellow'))(100)
+plot(EN,col=cl)  # con questo plot visualizzo le immagini contenute nello stack EN
 
 
 
