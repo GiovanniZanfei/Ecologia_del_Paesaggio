@@ -70,6 +70,11 @@ EN<-stack(listafinale)
 cl<-colorRampPalette(c('red','orange',yellow'))(100)
 plot(EN,col=cl)  # con questo plot visualizzo le immagini contenute nello stack EN
 
+# boxplot EN
+boxplot(EN,horizontal=T, # barre boxplot orizzontali
+        outline=F,       # elimina outliners
+        axes=T)          # presenta assi nel plot
+
 
 
 
