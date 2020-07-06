@@ -3,7 +3,7 @@
 # Copernicus data: 
 
 
-# 1. R_code_first.r	        #da fare
+# 1. R_code_first.r	        
 # 2. R_code_spatial.r	
 # 3. R_code_spatial2.r    #accorpato a spatial
 # 4. R_code_point_patterns.r
@@ -17,32 +17,37 @@
 #############################################################################
 #############################################################################
 
-# 1. R_code_first.r - Primo codice R EcoPae
+# 1. R_code_first.r - Primo codice R Ecologia del Paesaggio
 
-# GZ libraries
-install.packages("sp") # GZ  comando per scaricare libraries che posso poi richiamare con comando "library()" [si può anche usare "require()]
-library(sp)            # GZ  caricare library precedentemente installata 
+# libraries: "install.packages()" per scaricare libraries che posso poi richiamare con comando "library()" [o "require()]
+install.packages("sp")  
+library(sp)             
 
-data("meuse")  # GZ  richiamo dataset "meuse" (dati su presenza metalli pesanti nel terreno), inserito nella libreria "sp"
-meuse          # GZ  per visualizzare dati  
-head(meuse)    # GZ  prime 6 righe del database 
-names(meuse)   # GZ  nomi variabili (colonne del dataset)
-summary(meuse) # GZ  riporta statistiche di base per le variabili del dataset
+# dataset e funzioni associate
+data("meuse")  # richiamo dataset "meuse" (dati su presenza metalli pesanti nel terreno), inserito nella libreria "sp"
+meuse          # visualizzare dati  
+head(meuse)    # prime 6 righe del dataset 
+names(meuse)   # nomi variabili (colonne del dataset)
+summary(meuse) # riporta statistiche di base per le variabili del dataset
 
+# grafici: "pairs()" per creare grafici a coppie tra variabili di un dataset
+pairs(meuse)                                    # grafici a coppie tra tutte le variabili
+pairs(~cadmium + copper + lead, data = meuse)   # grafici a coppie tra le variabili indicate
 
-pairs(meuse)                                   # GZ  grafici a coppie fra tutte le variabili
-pairs(~ cadmium + copper + lead, data = meuse) # GZ  grafici a coppie fra le tre variabili selezionate
+# esercizio: pairs() quattro variabili [cadmium, copper, lead, zinc]
+pairs(~cadmium+copper+lead+zinc,data=meuse)
 
+# [,x:y] per selezionare subset composto da righe selezionate (3, 4, 5, 6 -> cadmium, copper, lead, zinc) 
+pairs(meuse[,3:6])
 
-pairs(meuse[, 3:6])          # GZ  anzichè scrivere varie colonne prendo subset del database meuse
-pairs(meuse[, 3:6],
-      col = "orange",        # GZ  colore simboli
-      pch=19,                # GZ  pch="point character" -> tipo di simbolo
-      cex = 2,               # GZ  cex="character exageration" -> grandezza del simbolo (di base cex=1)
-      main = "Primo pairs")  # GZ titolo del grafico
+# visualizzazione: scelgo colori["col="], simboli["pch="] e dimensioni["cex="] => per simboli pch=n con 1<n<25 (ad ogni numero un diverso simbolo)
+pairs(meuse[,3:6],col="blue",pch=18,cex=3)
 
+# "main=" per dare titolo al grafico
+pairs(meuse[,3:6],col="blue",pch=18,cex=3,main="Primo pairs")
 
-panel.correlations <- function(x, y, digits=1, prefix="", cex.cor)
+# prendere funzioni esterne => "panel.correlations" indica coefficiente di correlazione tra variabili
+panel.correlations<-function(x,y,digits=1,prefix="",cex.cor)
 {
   usr <- par("usr"); on.exit(par(usr))
   par(usr = c(0, 1, 0, 1))
@@ -53,9 +58,8 @@ panel.correlations <- function(x, y, digits=1, prefix="", cex.cor)
   if(missing(cex.cor)) cex <- 0.9/strwidth(txt)
   text(0.5, 0.5, txt, cex = cex * r)
 }
-# GZ  funzione per calcolare correlazione fra due variabili
 
-
+# "panel.smoothing" -> fa una specie di regressione tra variabili
 panel.smoothing <- function (x, y, col = par("col"), bg = NA, pch = par("pch"),
                              cex = 1, col.smooth = "red", span = 2/3, iter = 3, ...)
 {
@@ -65,10 +69,8 @@ panel.smoothing <- function (x, y, col = par("col"), bg = NA, pch = par("pch"),
     lines(stats::lowess(x[ok], y[ok], f = span, iter = iter),
           col = 1, ...)
 }
-# FS  smoothing fa una sorta di regressione fra due variabili
 
-
-
+# "panel.histograms" -> crea istogramma di una variabile
 panel.histograms <- function(x, ...)
 {
   usr <- par("usr"); on.exit(par(usr))
@@ -78,25 +80,15 @@ panel.histograms <- function(x, ...)
   y <- h$counts; y <- y/max(y)
   rect(breaks[-nB], 0, breaks[-1], y, col="white", ...)
 }
-# FS  funzione per creare istogramma di una variabile
 
+# uso funzioni precedentemente create per costruire grafici a coppie fra le quattro variabili selezionate, in cui vengono mostrati anche coefficienti di correlazione tra le variabili 
+# lower.panel -> parte sopra la diagonale
+# upper.panel -> parte sotto la diagonale
+# diag.panel  -> diagonale
+pairs(meuse[,3:6],lower.panel=panel.correlations,upper.panel=panel.smoothing,diag.panel=panel.histograms)
 
-# FS  grafici a coppie fra le quattro variabili selezionate, in cui vengono mostrati anche coefficiente di correlazione
-# FS  fra le variabili e istogramma delle singole variabili, utilizzando le funzioni precedentemente create
-pairs(meuse[, 3:6], lower.panel = panel.correlations, upper.panel = panel.smoothing, diag.panel = panel.histograms)
-# FS  lower.panel è la parte sotto la diagonale
-# FS  upper.panel è la parte sopra la diagonale
-# FS  diag.panel è la diagonale
-
-pairs(meuse[, 3:6], lower.panel = panel.smoothing, upper.panel = panel.correlations, diag.panel = panel.histograms)
-# FS  correlazione e interpolazione invertite di posto rispetto alla diagonale
-
-# FS  plot fra due variabili
-plot(meuse$cadmium, meuse$copper)
-attach(meuse) # FS  permette di richimare i campi dell'oggetto 'meuse' senza dover richiamare l'oggetto stesso (non serve più 'meuse$')
-plot(cadmium, copper)
-plot(cadmium, copper, pch=17, col = "green", main = "Primo plot", xlab = "Cadmio", ylab = "Rame")
-
+# esercizio: invertire posto rispetto alla diagonale di correlazione e interpolazione
+pairs(meuse[,3:6],lower.panel=panel.smoothing,upper.panel=panel.correlations,diag.panel=panel.histograms)
 
 #######################################################
 #######################################################
