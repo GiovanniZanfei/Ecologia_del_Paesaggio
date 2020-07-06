@@ -1,15 +1,8 @@
 # R spaziale: funzioni sapziali in Ecologia del Paesaggio [24/03/2020]
 
-# con install() installiamo un pacchetto in R
-install.packages("sp")
-
-# con library() richiamo il pacchetto
+# GZ Caricare library e dati
 library(sp)
-
-# dati
 data(meuse)
-
-# head() per visualizzare le prime sei righe di una tabella
 head(meuse)
 
 # alleghiamo il dataframe => attach()
