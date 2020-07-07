@@ -3,12 +3,12 @@
 # Copernicus data: 
 
 
-# 1. R_code_first.r	        
-# 2. R_code_spatial.r	
+# 1. 01_R_code_first.r	        
+# 2. 02_R_code_spatial.r	
 # 3. R_code_spatial2.r    #accorpato a spatial
-# 4. R_code_point_patterns.r
-# 5. R_code_TeleRil.r	
-# 6. R_code_Landcover.r	
+# 4. 03_R_code_point_patterns.r
+# 5. 04_R_code_TeleRil.r	
+# 6. 05_R_code_Landcover.r	
 # 7. R_code_multitemp.r	
 # 8. R_code_multitemp_NO2.r	
 # 9. R_code_snow.r	            #da far
@@ -19,34 +19,34 @@
 
 # 1. R_code_first.r - Primo codice R Ecologia del Paesaggio
 
-# libraries: "install.packages()" per scaricare libraries che posso poi richiamare con comando "library()" [o "require()]
+# GZ libraries: "install.packages()" per scaricare libraries che posso poi richiamare con comando "library()" [o "require()]
 install.packages("sp")  
 library(sp)             
 
-# dataset e funzioni associate
-data("meuse")  # richiamo dataset "meuse" (dati su presenza metalli pesanti nel terreno), inserito nella libreria "sp"
-meuse          # visualizzare dati  
-head(meuse)    # prime 6 righe del dataset 
-names(meuse)   # nomi variabili (colonne del dataset)
-summary(meuse) # riporta statistiche di base per le variabili del dataset
+# GZ dataset e funzioni associate
+data("meuse")  # GZ richiamo dataset "meuse" (dati su presenza metalli pesanti nel terreno), inserito nella libreria "sp"
+meuse          # GZ visualizzare dati  
+head(meuse)    # GZ prime 6 righe del dataset 
+names(meuse)   # GZ nomi variabili (colonne del dataset)
+summary(meuse) # GZ riporta statistiche di base per le variabili del dataset
 
-# grafici: "pairs()" per creare grafici a coppie tra variabili di un dataset
-pairs(meuse)                                    # grafici a coppie tra tutte le variabili
-pairs(~cadmium + copper + lead, data = meuse)   # grafici a coppie tra le variabili indicate
+# GZ grafici: "pairs()" per creare grafici a coppie tra variabili di un dataset
+pairs(meuse)                                    # GZ grafici a coppie tra tutte le variabili
+pairs(~cadmium + copper + lead, data = meuse)   # GZ grafici a coppie tra le variabili indicate
 
-# esercizio: pairs() quattro variabili [cadmium, copper, lead, zinc]
+# GZ esercizio: pairs() quattro variabili [cadmium, copper, lead, zinc]
 pairs(~cadmium+copper+lead+zinc,data=meuse)
 
-# [,x:y] per selezionare subset composto da righe selezionate (3, 4, 5, 6 -> cadmium, copper, lead, zinc) 
+# GZ [,x:y] per selezionare subset composto da righe selezionate (3, 4, 5, 6 -> cadmium, copper, lead, zinc) 
 pairs(meuse[,3:6])
 
-# visualizzazione: scelgo colori["col="], simboli["pch="] e dimensioni["cex="] => per simboli pch=n con 1<n<25 (ad ogni numero un diverso simbolo)
+# GZ visualizzazione: scelgo colori["col="], simboli["pch="] e dimensioni["cex="] => per simboli "pch=n" con 1<n<25 (ad ogni numero un diverso simbolo)
 pairs(meuse[,3:6],col="blue",pch=18,cex=3)
 
-# "main=" per dare titolo al grafico
+# GZ "main=" per dare titolo al grafico
 pairs(meuse[,3:6],col="blue",pch=18,cex=3,main="Primo pairs")
 
-# prendere funzioni esterne => "panel.correlations" indica coefficiente di correlazione tra variabili
+# GZ prendere funzioni esterne => "panel.correlations" indica coefficiente di correlazione tra variabili
 panel.correlations<-function(x,y,digits=1,prefix="",cex.cor)
 {
   usr <- par("usr"); on.exit(par(usr))
@@ -59,7 +59,7 @@ panel.correlations<-function(x,y,digits=1,prefix="",cex.cor)
   text(0.5, 0.5, txt, cex = cex * r)
 }
 
-# "panel.smoothing" -> fa una specie di regressione tra variabili
+# GZ "panel.smoothing" -> fa una specie di regressione tra variabili
 panel.smoothing <- function (x, y, col = par("col"), bg = NA, pch = par("pch"),
                              cex = 1, col.smooth = "red", span = 2/3, iter = 3, ...)
 {
@@ -70,7 +70,7 @@ panel.smoothing <- function (x, y, col = par("col"), bg = NA, pch = par("pch"),
           col = 1, ...)
 }
 
-# "panel.histograms" -> crea istogramma di una variabile
+# GZ "panel.histograms" -> crea istogramma di una variabile
 panel.histograms <- function(x, ...)
 {
   usr <- par("usr"); on.exit(par(usr))
@@ -81,13 +81,13 @@ panel.histograms <- function(x, ...)
   rect(breaks[-nB], 0, breaks[-1], y, col="white", ...)
 }
 
-# uso funzioni precedentemente create per costruire grafici a coppie fra le quattro variabili selezionate, in cui vengono mostrati anche coefficienti di correlazione tra le variabili 
-# lower.panel -> parte sopra la diagonale
-# upper.panel -> parte sotto la diagonale
-# diag.panel  -> diagonale
+# GZ uso funzioni precedentemente create per costruire grafici a coppie fra le quattro variabili selezionate, in cui vengono mostrati anche coefficienti di correlazione tra le variabili 
+# GZ lower.panel -> parte sopra la diagonale
+# GZ upper.panel -> parte sotto la diagonale
+# GZ diag.panel  -> diagonale
 pairs(meuse[,3:6],lower.panel=panel.correlations,upper.panel=panel.smoothing,diag.panel=panel.histograms)
 
-# esercizio: invertire posto rispetto alla diagonale di correlazione e interpolazione
+# GZ esercizio: invertire posto rispetto alla diagonale di correlazione e interpolazione
 pairs(meuse[,3:6],lower.panel=panel.smoothing,upper.panel=panel.correlations,diag.panel=panel.histograms)
 
 #######################################################
@@ -103,73 +103,72 @@ head(meuse)
 # GZ allegare dataframe -> attach()
 attach(meuse)
 
-# plot cadmium e lead segliendo colori[col], caratteri[pch] e dimensioni[cex]
+# GZ plot cadmium e lead segliendo colori["col"], caratteri["pch"] e dimensioni["cex"]
 plot(cadmium,lead,col="red",pch=19,cex=1)
 
-# esercizio: plot di copper e zinco con carattere triangolo e colore verde
+# GZ esercizio: plot copper e zinc con carattere triangolo(17) e colore verde
 plot(copper,zinc,col="green",pch=17)
 
-# cambiare etichette => xlab,ylab
+# GZ cambiare etichette => xlab,ylab
 plot(copper,zinc,col="green",pch=17,xlab="rame",ylab="zinco")
 
-# multiframe o multipanel => par(mfrow=c(numero righe,numero colonne)) ; a capo i plot che si vogliono mettere in una sola finestra
+# GZ multiframe o multipanel => "par(mfrow=c(numero righe,numero colonne))"; a capo i plot che si vogliono mettere in una sola finestra
 par(mfrow=c(1,2))
 plot(cadmium,lead,col="red",pch=19,cex=1)
 plot(copper,zinc,col="green",pch=17,xlab="rame",ylab="zinco")
 
-#invertiamo grafici riga/colonna
+# GZ invertire grafici riga/colonna
 par(mfrow=c(2,1))
 plot(cadmium,lead,col="red",pch=19,cex=1)
 plot(copper,zinc,col="green",pch=17,xlab="rame",ylab="zinco")
 
-# multiframe automatico [pacchetto GGally]
+# GZ multiframe automatico [library "GGally"]
 install.packages("GGally")
 library(GGally)
 ggpairs(meuse[,3:6])
 
-# Spatial ; coordinates devo indicare le coordinate del dataset [in meuse x e y] => facendo ~x+y
+# GZ Spatial; "coordinates" devo indicare le coordinate del dataset [in meuse x e y] => facendo ~x+y
 head(meuse)
 gpairs
-coordinates(meuse)=~x+y
+coordinates(meuse)=x+y
 plot(meuse)
 
-# spplot () servve per plottare i dati spazialmente
+# GZ "spplot()" -> plottare dati spazialmente
 spplot(meuse,"zinc")
 
 ### Spatial-2 [25/03/2020]
-# installare sp e caricare dati meuse
+# GZ installare library "sp" e caricare dati "meuse"
 install.packages("sp")
 library(sp)
 data(meuse)
 
-# coordinate del dataframe => coordinates(dataset)=~(coordinata,coordinata)
+# GZ coordinate del dataframe => "coordinates(dataset)=~(coordinata,coordinata)"
 coordinates(meuse)=~x+y
 
-# spplot dati zinco
+# GZ spplot dati zinco
 spplot(meuse,"zinc")
 
-# esercizio: spplot dati rame
+# GZ esercizio: spplot dati rame
 spplot(meuse,"copper")
 
-# bubble => altro metodo per plottare i dati, per es usiamo zinco
+# GZ "bubble(dataset,"variabile")" => altro metodo per plottare i dati, per es usiamo zinco
 bubble(meuse,"zinc")
 
-# esercizio: bubble del rame, colorato di rosso
+# GZ esercizio: bubble rame, colore rosso
 bubble(meuse,"copper",col="red")
 
-# esempio: foraminiferi, carbon capture =>per creare due oggetti
-# creiamo un vettore che contenga i dati di campionamento dei foraminiferi e lo chiamiamo foram [<- per dare nome al vettore c]
+# GZ esempio: foraminiferi, carbon capture 
+# GZ creare vettore che contenga dati di campionamento dei foraminiferi chiamandolo "foram" ["<-" per dare nome al vettore c]
 foram<-c(10,20,35,55,67,80)
-# idem per carbon stock
+# GZ idem per carbon stock
 carbon<-c(5,15,30,70,85,99)
 
-#plottiamo i dati
+# GZ plot con questi dati
 plot(foram,carbon,col="green",pch=19)
 
-### prendere dati dall'esterno (dati covid19agg.csv)
-# settare la cartella di lavoro [wd("percorso")]
+# GZ prendere dati dall'esterno (dati "covid19agg.csv")
+# GZ settare cartella di lavoro -> wd("percorso") [in questo caso dico C, cartella lab]
 setwd("C:/lab")
 
-# leggere tabella; head=T per indicare a r che ci sono i titoli delle colonne e dare alla tabella il nome covid19
+# GZ leggere tabella; head=T per indicare a R che ci sono titoli delle colonne e dare a tabella nome "covid19"
 Covid19<-read.table("covid_agg.csv",head=T)
-
