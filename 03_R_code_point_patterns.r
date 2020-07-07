@@ -1,44 +1,44 @@
-# Codice per analisi dei point patterns
+# Codice per analisi point patterns
 
-# Installare ggplot2
+# Installare library "ggplot2"
 intall.packages("ggplot2")
 library(ggplot2)
 
-# Installara spatstat
+# installare library "spatstat"
 install.packages("spatstat)
 library(spatstat)
 
-# Set working directory
+# iet working directory
 setwd("C:/lab")
 
-# Importare tabella dati su Covid19; head=T per indicare a r che ci sono i titoli delle colonne; dare alla tabella il nome Covid19
+# importare tabella dati Covid19; "head=T" per indicare a R che ci sono i titoli delle colonne; dare alla tabella il nome Covid19
 Covid19<-read.table("covid_agg.csv",head=T)
 head(Covid19)
 
-# Creare plot che associa Paesi e casi di Covid19 (anzichè $ si può fare attach(Covid19) plot(country,cases)
+# creare plot che associa Paesi e casi di Covid19 (anzichè "$" si può fare "attach(Covid19) plot(country,cases)")
 plot(Covid19$country,Covid19$cases)
 
-# Modificare struttura del plot -> posizione etichette rispetto ad asse (las=0 etichette parallele, 1 orizzontali, 2 perpendicolari, 3 verticali)
+# modificare struttura plot -> posizione etichette rispetto ad asse ("las=0" etichette parallele, 1 orizzontali, 2 perpendicolari, 3 verticali)
 plot(Covid19$country,Covid19$cases,las=0)
 plot(Covid19$country,Covid19$cases,las=1)
 plot(Covid19$country,Covid19$cases,las=2)
 plot(Covid19$country,Covid19$cases,las=3)
-plot(Covid19$country,Covid19$cases,las=3,cex.axis=0.5) #cex.axis per rimpicciolire la dimensione delle etichette
+plot(Covid19$country,Covid19$cases,las=3,cex.axis=0.5) # cex.axis per rimpicciolire dimensione etichette
 
 # ggplot2
 data(mpg)
 head(mpg)
 
-# Esempio di plot con 2 variabili numeriche -> ggplot2 ha bisogno di 3 cose: dati (mpg), estetica del grafico (aes) e geometria (geom_point)
+# esempio di plot con 2 variabili numeriche -> ggplot2 ha bisogno di 3 cose: dati ("mpg"), estetica del grafico ("aes") e geometria ("geom_point")
 ggplot(mpg,aes(x=displ,y=hwy))+geom_point()
 ggplot(mpg,aes(x=displ,y=hwy))+geom_line()    # usare linee anzichè punti nella visualizzazione
 ggplot(mpg,aes(x=displ,y=hwy))+geom_polygon() # usare poligoni 
 
-# ggplot2 per dati Covid19 -> usiamo longitudine e latitudine per avere i punti nello spazio e size=cases così punti più grandi dove ci sono più casi
+# ggplot2 per dati Covid19 -> usare longitudine e latitudine per avere i punti nello spazio, "size=cases" -> punti più grandi dove ci sono più casi
 ggplot(Covid19,aes(x=lon,y=lat,size=cases))+geom_point() 
 
-# Esercizio: zona con più alta densità di casi di Covid19
-# Creare dataset per spatstat
+# Esercizio: zona con più alta densità casi di Covid19
+# creare dataset per spatstat
 covids<-ppp(lon,lat,c(-180,180),c(-90,90))
 d<-density(covids)
 plot(d)
@@ -48,29 +48,29 @@ points(covids,pch=19) # Mostare i punti Covid19 sulla mappa di densità
 
 setwd("C:/lab")
 load("point_pattern.RData")
-ls() #per vedere cosa c'è nel file caricato
+ls() # per vedere contenuto del file caricato
 library(spatstat)
 plot(d)
 
-# palette -> modificare colori del plot d; (100) per dire a r che voglio una scala di quei colori con 100 sfumature
+# palette -> modificare colori del plot d; (100) per dire a R quante sfumature deve avere la scala di colori
 cl<-colorRampPalette(c('yellow','orange','red')) (100)
 plot(d,col=cl)
 
-# Esercizio: plot densità dal verde al blu
+# esercizio: plot densità dal verde al blu
 bluverde<-colorRampPalette(c('blue','grey','green')) (200)
 plot(d,col=bluverde)
 
-# Mostare i punti Covid19 sulla mappa di densità
+# mostare punti Covid19 sulla mappa di densità
 points(covids)
 
-# Inserire nella mappa i confini degli stati
-coastlines<-readOGR("ne_10m_coastline.shp") #readOGR serve per leggere file vettoriali
-install.packages("rgdal")                   #rgdal serve per usare il comando readOGR
+# inserire nella mappa confini degli stati
+coastlines<-readOGR("ne_10m_coastline.shp") # "readOGR" -> leggere file vettoriali
+install.packages("rgdal")                   # "rgdal" -> library necessaria per usare il comando "readOGR"
 library(rgdal)
 coastlines<-readOGR("ne_10m_coastline.shp")
-plot(coastlines,add=T)                      #add=T per aggiungere i confini al vecchio plot senza eliminarlo
+plot(coastlines,add=T)                      # "add=T" per aggiungere confini al vecchio plot senza eliminarlo
 
-# Esercizio: plot della mappa di densità con una nuova colorazione e aggiunta e coastlines
+# esercizio: plot della mappa di densità con nuova colorazione e aggiunta coastlines
 clr<-colorRampPalette(c('light blue','blue','pink','purple')) (400)
 plot(d,col=clr)
 plot(coastlines,add=T)
@@ -81,7 +81,7 @@ library(spatstat)
 ls()
 library(rgdal)
 
-# Esercizio: plot mappa di densità
+# esercizio: plot mappa di densità
 coastlines<-readOGR("ne_10m_coastline.shp")
 clr<-colorRampPalette(c('light blue','blue','pink','purple')) (400)
 plot(d,col=clr,main="density")
@@ -90,17 +90,17 @@ points(covids)
 
 # Interpolation
 covid
-marks(covids)<-covid$cases  # marks serve per associare i dati della categoria cases al pointpattern covids
-s<-Smooth(covids)           # Smooth serve per creare una mappa con i dati appena costruiti
+marks(covids)<-covid$cases  # "marks" -> associare dati categoria "cases" al pointpattern "covids"
+s<-Smooth(covids)           # "Smooth" -> creare mappa con i dati appena costruiti
 plot(s)
 
-# Esercizio: plot(s) con coastlines e punti
+# esercizio: plot(s) con coastlines e punti
 cls<-colorRampPalette(c('light blue','blue','green'))(100)
 plot(s,col=cls,main="Cases")
 points(covids)
 plot(coastlines,add=T)
 
-### Mappa finale (multiframe con entrambi i plot che abbimo fatto)
+### mappa finale (multiframe con entrambi i plot fatti)
 par(mfrow=c(2,1))
 
 # - Densità
@@ -172,31 +172,6 @@ plot(dT,main="Density of points")
 points(Tesippp)
 plot(interpol,main="Estimate of species richness")
 points(Tesippp)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
