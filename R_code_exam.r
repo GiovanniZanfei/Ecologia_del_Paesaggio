@@ -133,10 +133,11 @@ gpairs
 coordinates(meuse)=x+y
 plot(meuse)
 
-# GZ "spplot()" -> fissa spazialmente i dati nel grafico
+# GZ "spplot()" -> distribuzione spaziale di una variabile (in questo caso "zinc")
 spplot(meuse,"zinc")
 
 ### Spatial-2 [25/03/2020]
+
 # GZ installare library "sp", caricare dati "meuse" e fissare dataset ["attach()"]
 install.packages("sp")
 library(sp)
@@ -146,13 +147,13 @@ attach(meuse)
 # GZ specificare coordinate del dataset => "coordinates(dataset)=~(coordinata,coordinata)"
 coordinates(meuse)=~x+y
 
-# GZ spplot dati zinco
+# GZ "spplot" dati zinco
 spplot(meuse,"zinc")
 
-# GZ esercizio: spplot dati rame
+# GZ esercizio: "spplot" dati rame
 spplot(meuse,"copper")
 
-# GZ "bubble(dataset,"variabile")" => altro metodo per plottare i dati, crea un grafico a bolle
+# GZ "bubble(dataset,"variabile")" => rappresentazione spaziale come "spplot", crea un grafico a bolle di grandezza proporzionale a valore variabile
 bubble(meuse,"zinc")
 
 # GZ esercizio: bubble rame, colore rosso
