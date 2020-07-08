@@ -1,17 +1,17 @@
 # R spaziale: funzioni sapziali in Ecologia del Paesaggio [24/03/2020]
 
-# GZ Caricare library e dati
+# caricare library e dati
 library(sp)
 data(meuse)
 head(meuse)
 
-# alleghiamo il dataframe => attach()
+# fissare il dataframe => attach()
 attach(meuse)
 
 # plot cadmium e lead segliendo colori[col], caratteri[pch] e dimensioni[cex]
 plot(cadmium,lead,col="red",pch=19,cex=1)
 
-# esercizio: plot di copper e zinco con carattere triangolo e colore verde
+# esercizio: plot di copper e zinc con carattere triangolo e colore verde
 plot(copper,zinc,col="green",pch=17)
 
 # cambiare etichette => xlab,ylab
