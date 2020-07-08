@@ -93,14 +93,14 @@ pairs(meuse[,3:6],lower.panel=panel.smoothing,upper.panel=panel.correlations,dia
 #######################################################
 #######################################################
 
-# R spaziale: funzioni sapziali in Ecologia del Paesaggio [24/03/2020]
+# 2. R spaziale: funzioni sapziali in Ecologia del Paesaggio [24/03/2020]
 
-# GZ Caricare library e dati
+# GZ caricare library e dati
 library(sp)
 data(meuse)
 head(meuse)
 
-# GZ allegare dataframe -> attach()
+# GZ fissare dataframe -> attach()
 attach(meuse)
 
 # GZ plot cadmium e lead segliendo colori["col"], caratteri["pch"] e dimensioni["cex"]
@@ -109,40 +109,41 @@ plot(cadmium,lead,col="red",pch=19,cex=1)
 # GZ esercizio: plot copper e zinc con carattere triangolo(17) e colore verde
 plot(copper,zinc,col="green",pch=17)
 
-# GZ cambiare etichette => xlab,ylab
+# GZ cambiare etichette relative ad assi del grafico => "xlab","ylab"
 plot(copper,zinc,col="green",pch=17,xlab="rame",ylab="zinco")
 
 # GZ multiframe o multipanel => "par(mfrow=c(numero righe,numero colonne))"; a capo i plot che si vogliono mettere in una sola finestra
-par(mfrow=c(1,2))
-plot(cadmium,lead,col="red",pch=19,cex=1)
-plot(copper,zinc,col="green",pch=17,xlab="rame",ylab="zinco")
+par(mfrow=c(1,2))  # GZ "par(mfrow)" -> funzione per gestire aspetto dei grafici (creare diagramma a più riquadri); (1,2) indica una riga e due colonne
+plot(cadmium,lead,col="red",pch=19,cex=1)                      
+plot(copper,zinc,col="green",pch=17,xlab="rame",ylab="zinco")  
 
-# GZ invertire grafici riga/colonna
+# GZ invertire grafici riga/colonna [(2,1) anzichè (1,2)]
 par(mfrow=c(2,1))
 plot(cadmium,lead,col="red",pch=19,cex=1)
 plot(copper,zinc,col="green",pch=17,xlab="rame",ylab="zinco")
 
-# GZ multiframe automatico [library "GGally"]
+# GZ multiframe automatico -> library "GGally"
 install.packages("GGally")
 library(GGally)
-ggpairs(meuse[,3:6])
+ggpairs(meuse[,3:6])  # GZ "ggpairs" crea matrice di grafici con un determinato set di dati (in questo caso dalla terza alla sesta colonna del dataset "meuse")
 
-# GZ Spatial; "coordinates" devo indicare le coordinate del dataset [in meuse x e y] => facendo ~x+y
+# GZ Spatial; "coordinates()" per indicare che i dati hanno coordinate (in meuse x e y => facendo ~x+y)
 head(meuse)
 gpairs
 coordinates(meuse)=x+y
 plot(meuse)
 
-# GZ "spplot()" -> plottare dati spazialmente
+# GZ "spplot()" -> fissa spazialmente i dati nel grafico
 spplot(meuse,"zinc")
 
 ### Spatial-2 [25/03/2020]
-# GZ installare library "sp" e caricare dati "meuse"
+# GZ installare library "sp", caricare dati "meuse" e fissare dataset ["attach()"]
 install.packages("sp")
 library(sp)
 data(meuse)
+attach(meuse)
 
-# GZ coordinate del dataframe => "coordinates(dataset)=~(coordinata,coordinata)"
+# GZ specificare coordinate del dataset => "coordinates(dataset)=~(coordinata,coordinata)"
 coordinates(meuse)=~x+y
 
 # GZ spplot dati zinco
@@ -151,7 +152,7 @@ spplot(meuse,"zinc")
 # GZ esercizio: spplot dati rame
 spplot(meuse,"copper")
 
-# GZ "bubble(dataset,"variabile")" => altro metodo per plottare i dati, per es usiamo zinco
+# GZ "bubble(dataset,"variabile")" => altro metodo per plottare i dati, crea un grafico a bolle
 bubble(meuse,"zinc")
 
 # GZ esercizio: bubble rame, colore rosso
@@ -160,15 +161,21 @@ bubble(meuse,"copper",col="red")
 # GZ esempio: foraminiferi, carbon capture 
 # GZ creare vettore che contenga dati di campionamento dei foraminiferi chiamandolo "foram" ["<-" per dare nome al vettore c]
 foram<-c(10,20,35,55,67,80)
-# GZ idem per carbon stock
+# GZ "carbon" per carbon stock
 carbon<-c(5,15,30,70,85,99)
 
-# GZ plot con questi dati
+# GZ plot con questi vettori
 plot(foram,carbon,col="green",pch=19)
 
 # GZ prendere dati dall'esterno (dati "covid19agg.csv")
 # GZ settare cartella di lavoro -> wd("percorso") [in questo caso dico C, cartella lab]
 setwd("C:/lab")
 
-# GZ leggere tabella; head=T per indicare a R che ci sono titoli delle colonne e dare a tabella nome "covid19"
-Covid19<-read.table("covid_agg.csv",head=T)
+# GZ leggere tabella e usarla per costuire un dataframe; head=T per indicare a R che ci sono titoli delle colonne (prima riga è una stringa di testo)
+Covid19<-read.table("covid_agg.csv",head=T)  # GZ intitolare tabella "Covid19"
+
+#######################################################
+#######################################################
+
+
+
