@@ -18,7 +18,7 @@
 
 # 1. 01_R_code_first.r - Primo codice R Ecologia del Paesaggio
 
-# GZ libraries: "install.packages()" per scaricare libraries che posso poi richiamare con comando "library()" [o "require()]
+# GZ pacchetti: "install.packages()" -> scaricare pacchetti (poi richiamabili con comando "library()" [o "require()])
 install.packages("sp")  
 library(sp)             
 
@@ -94,7 +94,7 @@ pairs(meuse[,3:6],lower.panel=panel.smoothing,upper.panel=panel.correlations,dia
 
 # 2. 02_R_code_spatial.r - Funzioni sapziali in Ecologia del Paesaggio [24/03/2020]
 
-# GZ caricare library e dati
+# GZ caricare pacchetti e dati
 library(sp)
 data(meuse)
 head(meuse)
@@ -121,7 +121,7 @@ par(mfrow=c(2,1))
 plot(cadmium,lead,col="red",pch=19,cex=1)
 plot(copper,zinc,col="green",pch=17,xlab="rame",ylab="zinco")
 
-# GZ multiframe automatico -> library "GGally"
+# GZ multiframe automatico -> pacchetto "GGally"
 install.packages("GGally")
 library(GGally)
 ggpairs(meuse[,3:6])  # GZ "ggpairs" crea matrice di grafici con un determinato set di dati (in questo caso dalla terza alla sesta colonna del dataset "meuse")
@@ -137,7 +137,7 @@ spplot(meuse,"zinc")
 
 # Spatial-2 [25/03/2020]
 
-# GZ installare library "sp", caricare dati "meuse" e fissare dataset ["attach()"]
+# GZ installare pacchetto "sp", caricare dati "meuse" e fissare dataset ["attach()"]
 install.packages("sp")
 library(sp)
 data(meuse)
@@ -179,7 +179,7 @@ Covid19<-read.table("covid_agg.csv",head=T)  # GZ intitolare tabella "Covid19"
 
 # 03_R_code_point_patterns.r - Analisi point patterns [25/03/2020]
 
-# GZ installare libraries ("ggplot2", "spatstat")
+# GZ installare e richiamare pacchetti ("ggplot2", "spatstat")
 intall.packages("ggplot2")
 library(ggplot2)
 install.packages("spatstat)
@@ -200,12 +200,12 @@ plot(Covid19$country,Covid19$cases,las=0)
 plot(Covid19$country,Covid19$cases,las=1)
 plot(Covid19$country,Covid19$cases,las=2)
 plot(Covid19$country,Covid19$cases,las=3)
-plot(Covid19$country,Covid19$cases,las=3,cex.axis=0.5) # GZ "cex.axis" -> rimpicciolire dimensione etichette
+plot(Covid19$country,Covid19$cases,las=3,cex.axis=0.5)  # GZ "cex.axis" -> rimpicciolire dimensione etichette
 
 # GZ richiamare "ggplot2" (pacchetto per estetica e cura dei dettagli)
 library(ggplot2)
 
-# GZ dataframe "mpg" da library "ggplot2" ("mpg" raccoglie osservazioni US Environmental Protection Agency su 38 modelli di auto)
+# GZ dataframe "mpg" da pacchetto "ggplot2" ("mpg" raccoglie osservazioni US Environmental Protection Agency su 38 modelli di auto)
 data(mpg)
 head(mpg)
 
@@ -217,7 +217,7 @@ ggplot(mpg,aes(x=displ,y=hwy))+geom_polygon() # GZ usare poligoni
 # GZ "ggplot2" per dati Covid19 -> usare longitudine e latitudine per avere i punti nello spazio, "size=cases" -> punti più grandi dove ci sono più casi
 ggplot(Covid19,aes(x=lon,y=lat,size=cases))+geom_point() 
 
-# GZ richiamare library "spatstat" (mostra analisi dei modelli dei punti spaziali) e fissare dataframe
+# GZ richiamare pacchetto "spatstat" (mostra analisi dei modelli dei punti spaziali) e fissare dataframe
 library(spatstat)
 attach(covid)
 
@@ -248,7 +248,7 @@ plot(d,col=bluverde)
 points(covids)
 
 # GZ inserire nella mappa confini degli stati
-install.packages("rgdal")                   # GZ "rgdal" -> library necessaria per usare il comando "readOGR"
+install.packages("rgdal")                   # GZ "rgdal" -> pacchetto necessario per usare il comando "readOGR"
 library(rgdal)
 coastlines<-readOGR("ne_10m_coastline.shp") # GZ "readOGR" -> funzione che legge origine dati OGR e un layer in un oggetto vettoriale spaziale adatto, serve per creare layer dei confini
 plot(coastlines,add=T)                      # GZ "add=T" per aggiungere confini al vecchio plot senza eliminarlo -> grafico completo
@@ -257,6 +257,7 @@ plot(coastlines,add=T)                      # GZ "add=T" per aggiungere confini 
 clr<-colorRampPalette(c('light blue','blue','pink','purple')) (400)
 plot(d,col=clr)
 plot(coastlines,add=T)
+
 setwd("C:/lab")
 load("C:/lab/point_ppattern.RData")
 library(spatstat)
@@ -316,7 +317,7 @@ dev.off
 plot(dT)
 points(Tesippp,col="green")
 
-# GZ set wd e richiamo libraries
+# GZ set wd e richiamo pacchetti
 setwd("C:/lab")
 load("C:/lab/Tesi.RData")
 library(spatstat)
@@ -355,8 +356,3 @@ points(Tesippp)
 
 #######################################################
 #######################################################
-
-
-
-
-
