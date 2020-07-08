@@ -120,10 +120,10 @@ load("TeleRil.RData")
 ls()
 
 # importare file 1988 e 2011 ("brick")
-p224r63_2011 <- brick("p224r63_2011_masked.grd") 
-p224r63_1988 <- brick("p224r63_1988_masked.grd")
+p224r63_2011<-brick("p224r63_2011_masked.grd") 
+p224r63_1988<-brick("p224r63_1988_masked.grd")
 
-# immagine 1988, come 2011 ha bande (colori):
+# immagine 1988, come 2011 ha sette bande (colori):
 # B1: blue - 1
 # B2: green - 2
 # B3: red - 3
@@ -137,34 +137,58 @@ p224r63_1988 <- brick("p224r63_1988_masked.grd")
 plot(p224r63_1988)
 names(p224r63_1988)
 
-# esercizio: plot usando nir nella componenete R di RGB
-plotRGB(p224r63_1988,r=4,g=2,b=1,stretch="Lin")
+# plot multiframe per banda blu (1), verde (2), rosso (3) e nir (4)
+par(mfrow=c(2,2))
+clb<-colorRampPalette(c("dark blue","blue","light blue"))(100)    # blue
+plot(p224r63_1988$B1_sre,col=clb)
+clg<-colorRampPalette(c("dark green","green","light green"))(100) # green
+plot(p224r63_1988$B2_sre,col=clg)
+clr<-colorRampPalette(c("red","orange","yellow"))(100)            # red
+plot(p224r63_1988$B3_sre,col=clr)
+clnir<-colorRampPalette(c("purple","pink","light pink"))(100)     # nir
+plot(p224r63_1988$B4_sre,col=clnir)
+ 
+dev.off()
 
-# plot immagini 1988 e 2011
+# immagine con colori visibili (plotRGB "natural colours")
+plotRGB(p224r63_1988, r=3, g=2, b=1, stretch="Lin")
+
+# grafico poco comprensibile => usare infrarosso (plotRGB "false colours"
+# esercizio: plotRGB con componenete infrarossa
+plotRGB(p224r63_1988,r=4,g=3,b=2,stretch="Lin")
+
+# richiamare immagine 2011
+p224r63_2011
+
+# plot per confronto immagini 1988 e 2011
 par(mfrow=c(2,1))
 plotRGB(p224r63_1988,r=4,g=2,b=1,stretch="Lin")
 plotRGB(p224r63_2011,r=4,g=2,b=1,stretch="Lin")  
+# => territorio agricolo è molto più sviluppato nel 2011
+# nir indica la presenza di vegetazione, zolle di terra sono bianche o celeste
 
 dev.off()
 
-# Spectral indices (DVI)
-# DVI=nir-red -> es: dvi1988=nir1988-red1988
+# Spectral indices (DVI) => verificare stato salute vegetazione (foglie sane riflettono infrarosso)
+# DVI=nir-red -> es: dvi1988=nir1988-red1988 => risultati diversi in base a salute piante (sane=nir alto)
+# DVI 1988
 dvi1988<-p224r63_1988$B4_sre-p224r63_1988$B3_sre
 plot(dvi1988)
 
-# Esercizio: dvi2011
+# esercizio: DVI 2011
 dvi2011<-p224r63_2011$B4_sre-p224r63_2011$B3_sre
 plot(dvi2011)
 
-# cambio colorRampPalette
+# cambio "colorRampPalette"
 cldvi<-colorRampPalette(c('light blue','light green','green'))(100)
 plot(dvi2011,col=cldvi)
 
-# Analisi multitemporale (differenza 2011-1988)
+# analisi multitemporale (differenza 2011-1988) => differenza tra DVI dei 2 anni mostra cambiamento stato vegetazione
 difdvi<-dvi2011-dvi1988
 plot(difdvi)
 cldifdvi<-colorRampPalette(c('red','white','blue'))(100)
 plot(difdvi,col=cldifdvi)
+     
 dev.off()
 
 # Visualize the output
@@ -176,97 +200,42 @@ plot(difdvi,col=cldifdvi)
 
 dev.off()
 
-# Modificare risoluzione (grana) [lr=lowresolution]. fact=n è un moltiplicatore che ci dà dei pixel n volte più grandi dei precedenti
-p224r63_2011lr<-aggregate(p224r63_2011,fact=10)
-p224r63_2011    # inserrisco in r i due oggetti così da poter vedere le caratteristiche dei pixel
+# "aggregate" -> modificare risoluzione (grana) immagine creando nuovo RasterLayer con risoluzione più bassa quindi celle più grandi ("fact=n" è un moltiplicatore che ci dà dei pixel n volte più grandi dei precedenti)
+p224r63_2011lr<-aggregate(p224r63_2011,fact=10) # lr=lowresolution
+# inserire i due oggetti per vedere caratteristiche dei pixel
+p224r63_2011
 p224r63_2011lr
 
+# plot multiframe confronto tra le due risoluzioni     
 par(mfrow=c(2,1))
 plotRGB(p224r63_2011, r=4, g=3, b=2, stretch="Lin")
 plotRGB(p224r63_2011lr, r=4, g=3, b=2, stretch="Lin")
 
-# Lower resolution
-p224r63_2011lr50<-aggregate(p224r63_2011,fact=50)
-p224r63_2011lr50 # originale era 30m, così 1500m
+# lower resolution ("fact=50")
+p224r63_2011lr50<-aggregate(p224r63_2011,fact=50)   
+p224r63_2011lr50                                  
 
+# plot multiframe comparativo (normale, lr, lr50)     
 par(mfrow=c(3,1))
 plotRGB(p224r63_2011, r=4, g=3, b=2, stretch="Lin")
 plotRGB(p224r63_2011lr, r=4, g=3, b=2, stretch="Lin")
 plotRGB(p224r63_2011lr50, r=4, g=3, b=2, stretch="Lin")
 
-# DVI lr502011
+# DVI lr50 2011
 dvi2011lr50<-p224r63_2011lr50$B4_sre-p224r63_2011lr50$B3_sre
-
-# DVI lr501988
-p224r63_1988lr50<-aggregate(p224r63_1988,fact=50)
+plot(dvi2011lr50)
+     
+# DVI lr50 1988
+p224r63_1988lr50<-aggregate(p224r63_1988,fact=50)              # creare lr50 1988
 dvi1988lr50<-p224r63_1988lr50$B4_sre-p224r63_1988lr50$B3_sre
+plot(dvi1988lr50)     
 
 # difdvi lr50
 difdvilr50<-dvi2011lr50-dvi1988lr50
-plot(difdvilr50,col=cldifdvi)
+plot(difdvilr50,col=cldifdvi)        # riprendere palette "cldifdvi" creata in precedenza
 
-# multiframe
+# multiframe differenze DVI alle diverse risoluzioni
 par(mfrow=c(2,1))
 plot(difdvi,col=cldifdvi)
 plot(difdvilr50,col=cldifdvi)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
