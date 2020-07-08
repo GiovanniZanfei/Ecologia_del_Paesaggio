@@ -60,7 +60,7 @@ plot(d)
 
 # palette -> modificare colori del plot d; (100) per dire a R quante sfumature deve avere la scala di colori
 cl<-colorRampPalette(c('yellow','orange','red')) (100)
-plot(d,col=cl)  # plot densità con nuovi colori
+plot(d,col=cl)                                          # plot densità con nuovi colori
 
 # esercizio: plot densità dal verde al blu
 bluverde<-colorRampPalette(c('blue','grey','green')) (200)
@@ -141,6 +141,7 @@ points(Tesippp,col="green")
 
 # 28/04
 
+# set wd e richiamo libraries
 setwd("C:/lab")
 load("C:/lab/Tesi.RData")
 library(spatstat)
@@ -153,24 +154,24 @@ head(Tesi)
 # Associare al point pattern il valore d'interesse (ricchezza di specie) e poi procedere con l'interpolazione
 marks(Tesippp)<-Tesi$Species_richness
 interpol<-Smooth(Tesippp)
-plot(interpol)  # mappa
+plot(interpol)                         # mappa
 points(Tesippp)
 
-# Carichiamo il file vettoriale "San_Marino" e sovrapponiamo la mappa costruita prima
+# Carichiamo il file vettoriale "San_Marino" e sovrapponiamo la mappa costruita prima (così da avere i confini)
 sanmarino<-readOGR("San_Marino.shp")
 plot(sanmarino)
-plot(interpol,add=T)
+plot(interpol,add=T)                  # "add=T" per indicare che mappa di interpolazione sovrapposta a mappa di San Marino
 points(Tesippp)
-plot(sanmarino,add=T)
+plot(sanmarino,add=T)                 # -> vederre nuovamente confini
 
-# Esercizio: plot multiframe densità e interpolazione
+# Esercizio: plot multiframe densità e interpolazione (due righe, una colonna)
 par(mfrow=c(2,1))
 plot(dT,main="Density of points")
 points(Tesippp)
 plot(interpol,main="Estimate of species richness")
 points(Tesippp)
 
-# Esercizio: come prima ma 2 colonne e una riga
+# Esercizio: come prima ma due colonne e una riga
 par(mfrow=c(1,2))
 plot(dT,main="Density of points")
 points(Tesippp)
