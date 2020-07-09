@@ -6,8 +6,7 @@
 # 1. 01_R_code_first.r	        
 # 2. 02_R_code_spatial.r	
 # 3. 03_R_code_point_patterns.r
-# 4. 04_R_code_TeleRil.r	
-# 5. 05_R_code_Landcover.r	
+# 4. 04_R_code_TeleRil.r		
 # 6. R_code_multitemp.r	
 # 7. R_code_multitemp_NO2.r	
 # 8. R_code_snow.r	            #da far
@@ -211,8 +210,8 @@ head(mpg)
 
 # GZ esempio di plot con 2 variabili numeriche -> ggplot2 ha bisogno di 3 cose: dati ("mpg"), estetica del grafico ("aes", funzione di quotazione) e geometria ("geom_")
 ggplot(mpg,aes(x=displ,y=hwy))+geom_point()
-ggplot(mpg,aes(x=displ,y=hwy))+geom_line()    # GZ usare linee anzichè punti nella visualizzazione
-ggplot(mpg,aes(x=displ,y=hwy))+geom_polygon() # GZ usare poligoni 
+ggplot(mpg,aes(x=displ,y=hwy))+geom_line()    # GZ linee anzichè punti nella visualizzazione
+ggplot(mpg,aes(x=displ,y=hwy))+geom_polygon() # GZ poligoni 
 
 # GZ "ggplot2" per dati Covid19 -> usare longitudine e latitudine per avere i punti nello spazio, "size=cases" -> punti più grandi dove ci sono più casi
 ggplot(Covid19,aes(x=lon,y=lat,size=cases))+geom_point() 
@@ -271,7 +270,7 @@ plot(d,col=clr,main="density")
 plot(coastlines,add=T)
 points(covids)
 
-# GZ Interpolation
+### GZ INTERPOLATION
 covid
 marks(covids)<-covid$cases  # "marks" -> associare dati categoria "cases" al pointpattern "covids"
 s<-Smooth(covids)           # "Smooth" -> creare mappa con i dati appena costruiti
@@ -286,13 +285,13 @@ plot(coastlines,add=T)
 # GZ mappa finale (multiframe con entrambi i plot fatti)
 par(mfrow=c(2,1))
 
-# GZ primo plot per densità
+# GZ primo plot: densità
 clr<-colorRampPalette(c('light blue','blue','pink','purple')) (400)
 plot(d,col=clr,main="density")
 plot(coastlines,add=T)
 points(covids)
 
-# GZ secondo plot per interpolazione numero di casi
+# GZ secondo plot: interpolazione numero di casi
 cls<-colorRampPalette(c('light blue','blue','green'))(100)
 plot(s,col=cls,main="Cases")
 points(covids)
@@ -444,7 +443,7 @@ plotRGB(p224r63_2011, r=3, g=4, b=2, stretch="Lin")
 # GZ esercizo: nir nella componente B(Blue)
 plotRGB(p224r63_2011, r=3, g=2, b=4, stretch="Lin")
 
-# landcover
+### LANDCOVER
 
 # GZ setwd e pacchetti
 setwd("C:/lab/p224r63")
