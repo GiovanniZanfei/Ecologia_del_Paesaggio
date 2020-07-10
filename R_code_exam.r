@@ -9,8 +9,10 @@
 # 4. 04_R_code_TeleRil.r		
 # 5. 05_R_code_multitemp.r	
 # 6. 06_R_code_multitemp_NO2.r	
-# 7. R_code_snow.r	            #da far
-# 8. R_code_patches.r          # da far
+# 7. 07_R_code_snow.r	            
+# 8. 08_R_code_patches.r
+# 9. 09_R_code_crop.r
+# 10. 10_R_code_species_distribution_modeling.r
 
 #############################################################################
 #############################################################################
@@ -826,3 +828,258 @@ plot(difEN,col=cld)
 boxplot(EN,horizontal=T, # barre boxplot orizzontali
         outline=F,       # elimina outliners
         axes=T)          # presenta assi nel plot
+
+#############################################################################
+#############################################################################
+ 
+7. 07_R_code_snow.r - Codice analisi copertura nevosa
+
+# GZ setwd e pacchetti
+setwd("C:/lab")
+install.packages("ncdf4") # pacchetto per fornire interfaccia R per file di dati binari
+library(ncdf4)
+library(raster)
+
+# GZ importare immagine scaricata da Copernicus (copertura nevosa 18/05/2020)
+snowmay<-raster("c_gls_SCE500_202005180000_CEURO_MODIS_V1.0.1.nc")
+
+# GZ plot "snowmay"
+cl<-colorRampPalette(c('darkblue','blue','light blue'))(100) 
+plot(snowmay,col=cl)
+
+# GZ settare nuova wd (cartella "snow" => immagini copertura nevosa in diversi momenti)
+setwd("C:/lab/snow")
+
+# GZ importare file -> "rlist"
+library(raster)
+rlist<-list.files(pattern="snow",full.names=T)
+
+# GZ "lapply" lista appena creata (ogni file "rlist" importato con"raster")
+list_rast<-lapply(rlist,raster)
+
+# GZ raggruppare raster in unico vettore -> "stack" (consente di plottarle semplicemente tutte assieme)
+snow.multitemp<-stack(list_rast)
+
+# GZ plottare (usare palette creata prima) 
+plot(snow.multitemp, col=cl)
+
+# GZ multiframe (confronto) 2000 ("snow2000r") - 2020 ("snow2020r")
+par(mfrow=c(1,2))
+plot(snow.multitemp$snow2000r,col=cl)
+plot(snow.multitemp$snow2020r,col=cl)
+
+# GZ limite ordinate uguale per entrambe le mappe => confronto più facile
+par(mfrow=c(1,2))
+plot(snow.multitemp$snow2000r, col=cl, zlim=c(0,250))
+plot(snow.multitemp$snow2020r, col=cl, zlim=c(0,250))
+
+dev.off()
+
+# GZ differenza 2000-2020
+difsnow<-snow.multitemp$snow2020r - snow.multitemp$snow2000r
+cldif<-colorRampPalette(c('blue','white','red'))(100)         # GZ nuova palette
+plot(difsnow,col=cldiff)                                      # GZ pixel blu => diminuzione copertura, bianchi => stato stazionario, rossi => aumento
+
+# GZ "source" -> comandi da un file esterno
+source("prediction.r")
+# GZ comando "lento" => caricare direttamente "predicted.snow.2025"
+# GZ previsione 2025
+predicted.snow.2025.norm<-raster("predicted.snow.2025.norm.tif") 
+plot(predicted.snow.2025.norm,col=cl)
+
+#############################################################################
+#############################################################################
+
+8. 08_R_code_patches.r
+
+# GZ setwd e pacchetti
+setwd("C:/lab")
+install.packages("igraph")
+library(igraph)
+library(ggplot2)
+library(raster)
+
+# GZ caricare immagini raster -> "raster"
+d1c<-raster("d1c.tif")
+d2c<-raster("d2c.tif")
+
+# GZ plot per distinguere aree di foresta (palette bicolore)
+cl<-colorRampPalette(c('green','black'))(100)
+par(mfrow=c(1,2))
+plot(d1c,col=cl)
+plot(d2c,col=cl)
+cl<-colorRampPalette(c('black','green'))(100)  # correzione mappa => inversione colori
+par(mfrow=c(1,2))
+plot(d1c,col=cl)
+plot(d2c,col=cl)
+
+dev.off()
+
+# GZ valori 1 => foresta, 2 => aree agricole
+
+# GZ lasciare solo  pixel aree forestali -> "riclassify" per riclassificare valori, "cbind" per tenere i valori 1 (foresta) e assegnare agli altri "NA" (valore mancante)
+d1c.for<-reclassify(d1c,cbind(1,NA))
+d2c.for<-reclassify(d2c,cbind(1,NA)) 
+
+# GZ multiframe di confronto (solo foreste, foreste+agricoltura)
+par(mfrow=c(1,2))
+cl<-colorRampPalette(c('black','green'))(100) 
+plot(d1c,col=cl)
+plot(d1c.for)
+
+# GZ plot mappe solo foresta
+par(mfrow=c(1,2))
+plot(d1c)
+plot(d2c)
+
+
+# GZ creare patches ("igraph")
+library(igraph)
+d1c.for.patches<-clump(d1c.for) # "clump"-> unire e raggruppare pixel vicini (creare patches)
+d2c.for.patches<-clump(d2c.for)
+
+# GZ "writerRaster" -> esportare il file in formato ".tif" all'esterno di R (in questo caso cartella "lab))
+writeRaster(d1c.for.patches,"d1c.for.patches.tif")
+writeRaster(d2c.for.patches,"d2c.for.patches.tif")
+
+# GZ esercizio: plottare mappe una accanto all'altra
+par(mfrow=c(1,2))
+clp<-colorRampPalette(c('darkblue','blue','green','orange','yellow','red'))(100)   # GZ palette con più colori per visualizzare meglio patch di foresta
+plot(d1c.for.patches,col=clp)
+plot(d2c.for.patches,col=clp)
+
+# GZ numero patches creati nelle mappe
+d1c.for.patches  # GZ => 301 patches
+d2c.for.patches  # GZ => 1212 patches
+
+# GZ risultati in nuovo dataframe 
+time<-c("Before deforestation","After deforestation")  # GZ "time" -> dati prima e dopo deforestazione
+npatches<-c(301,1212)                                  # GZ "npatches" -> numero patches
+
+# GZ creare dataframe "output"
+output<-data.frame(time,npatches)
+
+# GZ plot finale ("ggplot")
+library(ggplot2)
+ggplot(output,aes(x=time,y=npatches,color="red"))+geom_bar(stat="identity",fill="white")
+
+#############################################################################
+#############################################################################
+
+9. 09_R_code_crop.r
+
+# GZ setwd (dati snow già usati => cartella "snow")
+setwd("C:/lab/snow")
+
+# GZ esercizio: caricare tutte le immagini della cartella
+library(raster)
+rlist<-list.files(pattern="snow")  # GZ "pattern=snow" -> permettere a R riconoscimento dei file 
+
+# GZ lapply
+list.rast<-lapply(rlist, raster)
+list.rast
+
+# GZ stack
+snow.multitemp<-stack(list.rast)
+
+# GZ plot 
+clb<-colorRampPalette(c('dark blue','blue','light blue'))(100)
+plot(snow.multitemp,col=clb)
+
+# GZ analisi immagini multitemporali
+snow.multitemp
+plot(snow.multitemp$snow2010r, col=clb)               # GZ plot immagine 2010 (Italia tra 6 e 20 gradi e tra 35 e 50)
+# GZ zoom su Italia -> "zoom", prima impostare nuova estensione ("extension")
+extension<-c(6,20,35,50)
+zoom(snow.multitemp$snow2010r,ext=extension)
+zoom(snow.multitemp$snow2010r,ext=extension,col=clb)  # GZ plot 2010, zoom Italia, palette "clb"
+
+# GZ definire estensione tramite disegno ("drawExtent")
+plot(snow.multitemp$snow2010r, col=clb)                    # GZ riplottare immagine originale
+zoom(snow.multitemp$snow2010r,ext=drawExtent())
+extension<-c(6,20,35,50)
+snow2010r.italy<-crop(snow.multitemp$snow2010r,extension)  # GZ "crop" -> ottenere immagine zona ritagliata  
+plot(snow2010r.italy,col=clb)                              # GZ plot immagine ottenuta
+
+# GZ esercizio: crop Italia con stack completo
+extension<-c(6,20,35,50)
+snow.multitemp.Italy<-crop(snow.multitemp,extension)
+plot(snow.multitemp.Italy,col=clb)
+
+# GZ impostare legenda uniforme
+snow.multitemp.Italy
+# GZ min->20, MAX->200
+# GZ aggiungere limite => "zlim=c(20,200)"
+plot(snow.multitemp.italy,col=clb,zlim=c(20,200))
+
+# GZ boxplot => valore MAX copertura nevosa diminuisce nel tempo
+boxplot(snow.multitemp.italy, horizontal=T,outline=F)
+
+#############################################################################
+#############################################################################
+
+10. 10_R_code_species_distribution_modeling.r - Species Distribution Modeling
+
+# GZ pacchetti (no set wd perchè dati presenti nel pacchetto "sdm")
+install.packages(sdm)
+library(sdm)
+library(raster)
+library(rgdal)
+
+# GZ "system.file" -> caricare file da utilizzare contenuto in "sdm"
+file<-system.file("external/species.shp",package="sdm")
+
+# GZ "shapefile" (pacchetto "raster")
+species<-shapefile(file)
+
+# GZ caratteristiche dataset
+species
+species$Occurrence  # GZ valori "Occurrence"  # ogni punto associato a presenza assenza specie => "Occurrence" = 0(assente) o 1(presente)
+
+# GZ plot dataset "species"
+plot(species)  # GZ mostrate presenze e assenze
+# GZ diversificare assenze (rosso) da presenze (blu)
+plot(species[species$Occurrence==1,],col='blue',pch=16)
+points(species[species$Occurrence==0,],col='red',pch=16)
+
+# GZ variabili ambientali disponibili (cartella "external", pacchetto "sdm")
+path <- system.file("external",package="sdm")
+
+# GZ importare file per prevedere distribuzione spaziale in base a variabili ambientali
+lst<-list.files(path=path,pattern='asc$',full.names=T) 
+lst                                                    # GZ variabili: elevation, precipitation, temperature, vegetation
+preds<-stack(lst)                                      # GZ stack => predittore distribuzione
+cl<-colorRampPalette(c('yellow','orange','red'))(100)  # GZ palette
+plot(preds,col=cl)                                     # GZ distribuzione probabilmente relazionata a valori variabili
+
+# GZ plot elevation
+plot(preds$elevation,col=cl)
+points(species[species$Occurrence==1,],pch=16)  # GZ aggiungere punti presenza => specie presente a bassa quota
+
+# GZ temperature
+plot(preds$temperature, col=cl)
+points(species[species$Occurrence==1,],pch=16)  # GZ => specie non gradisce basse temperature
+
+# GZ precipitation
+plot(preds$precipitation, col=cl)
+points(species[species$Occurrence==1,],pch=16)  # GZ => condizioni medie sono ottimali
+
+# GZ vegetation
+plot(preds$vegetation, col=cl)
+points(species[species$Occurrence==1,],pch=16)  # GZ => elevata copertura vegetale è favorevole
+
+# GZ sintesi: bassa quota, temperatura medio-alta, piovosità media, buona copertura vegetale
+
+# GZ Generalized Linear Model (glm)
+d<-sdmData(train=species,predictors=preds)  # GZ indicare a R dati relativi a specie e variabili da considerare
+d
+# GZ modello
+m1<-sdm(Occurrence~elevation+precipitation+temperature+vegetation,data=d,methods='glm') 
+
+# GZ previsione (creare mappa predittiva distribuzione in base alle quattro variabili) -> "predict"
+p1<-predict(m1,newdata=preds)
+plot(p1,col=cl)
+points(species[species$Occurrence== 1,],pch=16)
+
+#############################################################################
+#############################################################################
