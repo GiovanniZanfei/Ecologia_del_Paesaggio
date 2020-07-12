@@ -81,3 +81,4 @@ plot(difEN,col=cld)
 boxplot(EN,horizontal=T, # barre boxplot orizzontali
         outline=F,       # elimina outliners
         axes=T)          # presenta assi nel plot
+# in media cambiamenti non clamorosi, cambiamenti più evidenti sui massimi
