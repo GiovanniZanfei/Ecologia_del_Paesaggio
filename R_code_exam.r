@@ -589,7 +589,7 @@ dvi2011lr50<-p224r63_2011lr50$B4_sre-p224r63_2011lr50$B3_sre
 plot(dvi2011lr50)
      
 # GZ DVI lr50 1988
-p224r63_1988lr50<-aggregate(p224r63_1988,fact=50)              # GZcreare lr50 1988
+p224r63_1988lr50<-aggregate(p224r63_1988,fact=50)              # GZ creare lr50 1988
 dvi1988lr50<-p224r63_1988lr50$B4_sre-p224r63_1988lr50$B3_sre
 plot(dvi1988lr50)     
 
@@ -814,7 +814,7 @@ rlist
 listafinale<-lapply(rlist,raster)
 listafinale
 
-# GZ "stack" -> trasformare lista in una sorta di immagine di n bande (13 in questi caso), come fosse un set multitemporale
+# GZ "stack" -> trasformare lista in una sorta di agglomerato di n bande (13 in questi caso), come fosse un set multitemporale
 EN<-stack(listafinale)
 cl<-colorRampPalette(c('red','orange',yellow'))(100)
 plot(EN,col=cl)                                       # GZ -> visualizzare immagini contenute nello stack "EN"
