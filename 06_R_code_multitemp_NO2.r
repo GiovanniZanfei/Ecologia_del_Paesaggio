@@ -67,7 +67,7 @@ rlist
 listafinale<-lapply(rlist,raster)
 listafinale
 
-# "stack" -> trasformare lista in una sorta di immagine di n bande (13 in questi caso), come fosse un set multitemporale
+# "stack" -> trasformare lista in una sorta di agglomerato di n bande (13 in questi caso), come fosse un set multitemporale
 EN<-stack(listafinale)
 cl<-colorRampPalette(c('red','orange',yellow'))(100)
 plot(EN,col=cl)                                       # -> visualizzare immagini contenute nello stack "EN"
