@@ -827,7 +827,7 @@ plot(difEN,col=cld)
 # GZ boxplot EN -> confronto tra tutte le immagini creando diagramma a riquadri (indicando caratteristiche grafiche)
 boxplot(EN,horizontal=T, # barre boxplot orizzontali
         outline=F,       # elimina outliners
-        axes=T)          # presenta assi nel plot
+        axes=T)          # presenza assi nel plot
 # in media cambiamenti non clamorosi, cambiamenti più evidenti sui massimi
 
 #############################################################################
