@@ -18,7 +18,7 @@ setwd("C:/lab/snow")
 
 # importare file -> "rlist"
 library(raster)
-rlist<-list.files(pattern="snow",full.names=T)
+rlist<-list.files(pattern=".tif",full.names=T)
 
 # "lapply" lista appena creata (ogni file "rlist" importato con"raster")
 list_rast<-lapply(rlist,raster)
