@@ -862,7 +862,7 @@ list_rast<-lapply(rlist,raster)
 snow.multitemp<-stack(list_rast)
 
 # GZ plottare (usare palette creata prima) 
-plot(snow.multitemp, col=cl)
+plot(snow.multitemp,col=cl)
 
 # GZ multiframe (confronto) 2000 ("snow2000r") - 2020 ("snow2020r")
 par(mfrow=c(1,2))
@@ -871,8 +871,8 @@ plot(snow.multitemp$snow2020r,col=cl)
 
 # GZ limite ordinate uguale per entrambe le mappe => confronto più facile
 par(mfrow=c(1,2))
-plot(snow.multitemp$snow2000r, col=cl, zlim=c(0,250))
-plot(snow.multitemp$snow2020r, col=cl, zlim=c(0,250))
+plot(snow.multitemp$snow2000r,col=cl,zlim=c(0,250))
+plot(snow.multitemp$snow2020r,col=cl,zlim=c(0,250))
 
 dev.off()
 
