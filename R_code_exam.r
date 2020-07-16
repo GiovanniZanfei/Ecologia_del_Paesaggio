@@ -1,6 +1,6 @@
 # R_code_exam.r 
 
-# Copernicus data: 
+# Copernicus data: https://land.copernicus.vgt.vito.be/PDF/portal/Application.html
 
 # 1. 01_R_code_first.r	        
 # 2. 02_R_code_spatial.r	
@@ -12,6 +12,7 @@
 # 8. 08_R_code_patches.r
 # 9. 09_R_code_crop.r
 # 10. 10_R_code_species_distribution_modeling.r
+# 11. 11_R_code_examproject.r
 
 #############################################################################
 #############################################################################
