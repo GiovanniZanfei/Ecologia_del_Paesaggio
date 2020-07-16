@@ -33,7 +33,7 @@ d2c.for<-reclassify(d2c,cbind(1,NA))
 par(mfrow=c(1,2))
 cl<-colorRampPalette(c('black','green'))(100) 
 plot(d1c,col=cl)
-plot(d1c.for)
+plot(d1c.for,col=cl)
 
 # plot mappe solo foresta
 par(mfrow=c(1,2))
