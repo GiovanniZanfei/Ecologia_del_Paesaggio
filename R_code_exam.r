@@ -916,7 +916,7 @@ plot(d2c,col=cl)
 
 dev.off()
 
-# GZ valori 1 => foresta, 2 => aree agricole
+# GZ valori 2 => foresta, 1 => aree agricole
 
 # GZ lasciare solo  pixel aree forestali -> "reclassify" per riclassificare valori, "cbind" per trasformare valori 1 (agricoltura) in valori nulli ("NA" => valore mancante)
 d1c.for<-reclassify(d1c,cbind(1,NA))
@@ -932,7 +932,6 @@ plot(d1c.for,col=cl)
 par(mfrow=c(1,2))
 plot(d1c)
 plot(d2c)
-
 
 # GZ creare patches ("igraph")
 library(igraph)
@@ -959,6 +958,7 @@ npatches<-c(301,1212)                                  # GZ "npatches" -> numero
 
 # GZ creare dataframe "output"
 output<-data.frame(time,npatches)
+attach(output)
 
 # GZ plot finale ("ggplot")
 library(ggplot2)
