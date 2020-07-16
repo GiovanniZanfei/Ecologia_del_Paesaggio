@@ -42,7 +42,7 @@ plot(snow.multitemp.Italy,col=clb)
 snow.multitemp.Italy
 # min->20, MAX->200
 # aggiungere limite => "zlim=c(20,200)"
-plot(snow.multitemp.italy,col=clb,zlim=c(20,200))
+plot(snow.multitemp.Italy,col=clb,zlim=c(20,200))
 
 # boxplot => valore MAX copertura nevosa diminuisce nel tempo
-boxplot(snow.multitemp.italy, horizontal=T,outline=F)
+boxplot(snow.multitemp.Italy, horizontal=T,outline=F)
