@@ -5,7 +5,7 @@ setwd("C:/lab/snow")
 
 # esericizio: caricare tutte le immagini della cartella
 library(raster)
-rlist<-list.files(pattern="snow")  # "pattern=snow" -> permetterer a R riconoscimento dei file 
+rlist<-list.files(pattern=".tif")  # "pattern=.tif" -> permetterer a R riconoscimento dei file 
 
 # lapply
 list.rast<-lapply(rlist, raster)
