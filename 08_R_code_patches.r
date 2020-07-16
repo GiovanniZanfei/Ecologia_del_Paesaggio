@@ -23,9 +23,9 @@ plot(d2c,col=cl)
 
 dev.off()
 
-# valori 1 => foresta, 2 => aree agricole
+# valori 2 => foresta, 1 => aree agricole
 
-# lasciare solo  pixel aree forestali -> "riclassify" per riclassificare valori, "cbind" per tenere i valori 1 (foresta) e assegnare agli altri "NA" (valore mancante)
+# lasciare solo  pixel aree forestali -> "riclassify" per riclassificare valori, "cbind" per trasformare valori 1 (agricoltura) in valori nulli ("NA" => valore mancante)
 d1c.for<-reclassify(d1c,cbind(1,NA))
 d2c.for<-reclassify(d2c,cbind(1,NA)) 
 
