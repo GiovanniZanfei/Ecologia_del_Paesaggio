@@ -918,7 +918,7 @@ dev.off()
 
 # GZ valori 1 => foresta, 2 => aree agricole
 
-# GZ lasciare solo  pixel aree forestali -> "riclassify" per riclassificare valori, "cbind" per tenere i valori 1 (foresta) e assegnare agli altri "NA" (valore mancante)
+# GZ lasciare solo  pixel aree forestali -> "reclassify" per riclassificare valori, "cbind" per tenere i valori 1 (foresta) e assegnare agli altri "NA" (valore mancante)
 d1c.for<-reclassify(d1c,cbind(1,NA))
 d2c.for<-reclassify(d2c,cbind(1,NA)) 
 
