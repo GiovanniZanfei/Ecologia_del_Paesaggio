@@ -2,7 +2,6 @@
 
 # Copernicus data: 
 
-
 # 1. 01_R_code_first.r	        
 # 2. 02_R_code_spatial.r	
 # 3. 03_R_code_point_patterns.r
@@ -16,8 +15,9 @@
 
 #############################################################################
 #############################################################################
+#############################################################################
 
-# 1. 01_R_code_first.r - Primo codice R Ecologia del Paesaggio
+### 1. 01_R_code_first.r - Primo codice R Ecologia del Paesaggio
 
 # GZ pacchetti: "install.packages()" -> scaricare pacchetti (poi richiamabili con comando "library()" [o "require()])
 install.packages("sp")  
@@ -90,10 +90,11 @@ pairs(meuse[,3:6],lower.panel=panel.correlations,upper.panel=panel.smoothing,dia
 # GZ esercizio: invertire posto rispetto alla diagonale di correlazione e interpolazione
 pairs(meuse[,3:6],lower.panel=panel.smoothing,upper.panel=panel.correlations,diag.panel=panel.histograms)
 
-#######################################################
-#######################################################
+#############################################################################
+#############################################################################
+#############################################################################
 
-# 2. 02_R_code_spatial.r - Funzioni sapziali in Ecologia del Paesaggio [24/03/2020]
+### 2. 02_R_code_spatial.r - Funzioni sapziali in Ecologia del Paesaggio [24/03/2020]
 
 # GZ caricare pacchetti e dati
 library(sp)
@@ -175,10 +176,11 @@ setwd("C:/lab")
 # GZ leggere tabella e usarla per costuire un dataframe; head=T per indicare a R che ci sono titoli delle colonne (prima riga è una stringa di testo)
 Covid19<-read.table("covid_agg.csv",head=T)  # GZ intitolare tabella "Covid19"
 
-#######################################################
-#######################################################
+#############################################################################
+#############################################################################
+#############################################################################
 
-# 03_R_code_point_patterns.r - Analisi point patterns [25/03/2020]
+### 03_R_code_point_patterns.r - Analisi point patterns [25/03/2020]
 
 # GZ installare e richiamare pacchetti ("ggplot2", "spatstat")
 intall.packages("ggplot2")
@@ -356,12 +358,13 @@ points(Tesippp)
 plot(interpol,main="Estimate of species richness")
 points(Tesippp)
 
-#######################################################
-#######################################################
+#############################################################################
+#############################################################################
+#############################################################################
 
-4. 04_R_code_TeleRil.r - codice R per analisi satellitari (telerilevamento)
+### 4. 04_R_code_TeleRil.r - codice R per analisi satellitari (telerilevamento)
 
-#  GZ set wd e pacchetti ("raster","RStoolbox")  
+# GZ set wd e pacchetti ("raster","RStoolbox")  
 setwd("C:/lab")
 install.packages("raster")       # "raster" per lettura, scrittura, analisi e modellizzazione di dati spaziali
 library(raster)
@@ -604,8 +607,9 @@ plot(difdvilr50,col=cldifdvi)
 
 #############################################################################
 #############################################################################
+#############################################################################
 
-5. 05_R_code_multitemp.r - Analisi multitemporale variazione landcover
+### 5. 05_R_code_multitemp.r - Analisi multitemporale variazione landcover
 
 # GZ setwd e pacchetti
 setwd("C:/lab")
@@ -742,8 +746,9 @@ grid.arrange(grafico1,grafico2,nrow=1)
 
 #############################################################################
 #############################################################################
+#############################################################################
 
-6. 06_R_code_multitemp_NO2.r - Codice per analisi dati ESA su NO2 (gennaio-marzo 2020 => lockdown)
+### 6. 06_R_code_multitemp_NO2.r - Codice per analisi dati ESA su NO2 (gennaio-marzo 2020 => lockdown)
 
 # GZ setwd e pacchetti
 setwd("C:/lab")
@@ -832,8 +837,9 @@ boxplot(EN,horizontal=T, # barre boxplot orizzontali
 
 #############################################################################
 #############################################################################
+#############################################################################
  
-7. 07_R_code_snow.r - Codice analisi copertura nevosa
+### 7. 07_R_code_snow.r - Codice analisi copertura nevosa
 
 # GZ setwd e pacchetti
 setwd("C:/lab")
@@ -890,8 +896,9 @@ plot(predicted.snow.2025.norm,col=cl)
 
 #############################################################################
 #############################################################################
+#############################################################################
 
-8. 08_R_code_patches.r
+### 8. 08_R_code_patches.r
 
 # GZ setwd e pacchetti
 setwd("C:/lab")
@@ -966,8 +973,9 @@ ggplot(output,aes(x=time,y=npatches,color="red"))+geom_bar(stat="identity",fill=
 
 #############################################################################
 #############################################################################
+#############################################################################
 
-9. 09_R_code_crop.r
+### 9. 09_R_code_crop.r
 
 # GZ setwd (dati snow già usati => cartella "snow")
 setwd("C:/lab/snow")
@@ -1018,8 +1026,9 @@ boxplot(snow.multitemp.italy, horizontal=T,outline=F)
 
 #############################################################################
 #############################################################################
+#############################################################################
 
-10. 10_R_code_species_distribution_modeling.r - Species Distribution Modeling
+### 10. 10_R_code_species_distribution_modeling.r - Species Distribution Modeling
 
 # GZ pacchetti (no set wd perchè dati presenti nel pacchetto "sdm")
 install.packages(sdm)
@@ -1082,5 +1091,6 @@ p1<-predict(m1,newdata=preds)
 plot(p1,col=cl)
 points(species[species$Occurrence== 1,],pch=16)
 
+#############################################################################
 #############################################################################
 #############################################################################
