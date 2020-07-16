@@ -46,7 +46,7 @@ difsnow<-snow.multitemp$snow2020r - snow.multitemp$snow2000r
 cldif<-colorRampPalette(c('blue','white','red'))(100)         # nuova palette
 plot(difsnow,col=cldiff)                                      # pixel blu => diminuzione copertura, bianchi => stato stazionario, rossi => aumento
 
-# "source" -> comandi da un file esterno
+# "source" -> caricare codice da file esterni
 source("prediction.r")
 # comando "lento" => caricare direttamente "predicted.snow.2025"
 # previsione 2025
