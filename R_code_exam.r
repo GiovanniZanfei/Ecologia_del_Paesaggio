@@ -983,7 +983,7 @@ setwd("C:/lab/snow")
 
 # GZ esercizio: caricare tutte le immagini della cartella
 library(raster)
-rlist<-list.files(pattern="snow")  # GZ "pattern=snow" -> permettere a R riconoscimento dei file 
+rlist<-list.files(pattern=".tif")  # GZ "pattern=.tif" -> permettere a R riconoscimento dei file 
 list.rast<-lapply(rlist, raster)
 list.rast
 
