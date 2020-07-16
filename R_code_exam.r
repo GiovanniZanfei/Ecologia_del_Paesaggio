@@ -881,7 +881,7 @@ difsnow<-snow.multitemp$snow2020r - snow.multitemp$snow2000r
 cldif<-colorRampPalette(c('blue','white','red'))(100)         # GZ nuova palette
 plot(difsnow,col=cldif)                                       # GZ pixel blu => diminuzione copertura, bianchi => stato stazionario, rossi => aumento
 
-# GZ "source" -> comandi da un file esterno
+# GZ "source" -> caricare codice da file esterni
 source("prediction.r")
 # GZ comando "lento" => caricare direttamente "predicted.snow.2025"
 # GZ previsione 2025
