@@ -22,13 +22,6 @@ plot(luglio2000)
 plot(luglio2020)
 zlim per uguagliare
 
-# differenze
-dif2000<-gennaio 2000 - luglio 2000
-dif2020<-gennaio 2020 - luglio 2020
-difjanuary<-gennaio 2000- gennaio 2020
-difjuly<-luglio - luglio
-plot di tutte
-
 uguale per copertura nevosa
 
 
