@@ -6,7 +6,7 @@ library(ncdf4)
 library(raster)
 
 # importare dati albedo e raggrupparli
-rlist<-list.files(pattern="")
+rlist<-list.files(pattern=".nc",full.names=T)
 albedo<-lapply(rlist,raster)
 albedomultitemp<-stack(albedo)
 
