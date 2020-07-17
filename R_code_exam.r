@@ -1029,8 +1029,8 @@ boxplot(snow.multitemp.Italy,horizontal=T,outline=F)
 
 ### 10. 10_R_code_species_distribution_modeling.r - Species Distribution Modeling
 
-# GZ pacchetti (no set wd perchè dati presenti nel pacchetto "sdm")
-install.packages(sdm)
+# GZ pacchetti (no setwd perchè dati presenti nel pacchetto "sdm")
+install.packages("sdm")
 library(sdm)
 library(raster)
 library(rgdal)
