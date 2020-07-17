@@ -14,14 +14,16 @@ albedomultitemp<-stack(albedo)
 cl<-colorRampPalette(c('black','grey','white'))(100) 
 plot(albedomultitemp,col=cl)
 
-# confronto anni
-par(mfrow=c(2,2))
-plot(albedogennaio2000,cl)
-plot(albedogennaio2020)
-plot(luglio2000)
-plot(luglio2020)
-zlim per uguagliare
+# confronto
+2000-2010-2020
+2000-2010-2020
 
-uguale per copertura nevosa
+# quantificare differenze?
+
+# importare, plot e confronto anche per copertura nevosa
+
+# confronto albedo copertura nevosa
+
+# crop alpi
 
 
