@@ -6,13 +6,13 @@ library(ncdf4)
 library(raster)
 
 # importare dati albedo e raggrupparli
-rlist<-list.files(pattern=".nc",full.names=T)
-albedo<-lapply(rlist,raster)
-albedomultitemp<-stack(albedo)
+examlist<-list.files(pattern=".nc",full.names=T)
+list_rast<-lapply(examlistlist,raster)
+alb.multitemp<-stack(list_rast)
 
 # plot
-cl<-colorRampPalette(c('black','grey','white'))(100) 
-plot(albedomultitemp,col=cl)
+cl<-colorRampPalette(c('red','orange','yellow'))(100) 
+plot(alb,multitemp,col=cl,zlim=c(0,0.7))
 
 # confronto
 2000-2010-2020
