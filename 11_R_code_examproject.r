@@ -20,7 +20,7 @@ alb.jul2020<-alb.multitemp$Broadband.directional.albedo.over.total.spectrum.6
 
 # plot
 cl<-colorRampPalette(c('red','orange','yellow'))(100) 
-plot(alb.multitemp,col=cl,zlim=c(0,0.9))
+plot(alb.multitemp,col=cl,zlim=c(0,0.9)) # chiedere ad Aaron per titoli
 
 # boxplot -> vedere andamento
 boxplot(alb.multitemp,horizontal=T,outline=F)
