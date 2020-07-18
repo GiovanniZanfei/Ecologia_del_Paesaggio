@@ -20,22 +20,22 @@ alb.jul2020<-alb.multitemp$Broadband.directional.albedo.over.total.spectrum.6
 
 # plot
 cl<-colorRampPalette(c('red','orange','yellow'))(100) 
-plot(alb.multitemp,col=cl,zlim=c(0,0.7))
+plot(alb.multitemp,col=cl,zlim=c(0,0.9))
 
 # boxplot -> vedere andamento
 boxplot(alb.multitemp,horizontal=T,outline=F)
 
 # confronto jan
 par(mfrow=c(1,3))
-plot(alb.jan2000,col=cl,zlim=c(0,0.7))
-plot(alb.jan2010,col=cl,zlim=c(0,0.7))
-plot(alb.jan2020,col=cl,zlim=c(0,0.7))
+plot(alb.jan2000,col=cl,zlim=c(0,0.9))
+plot(alb.jan2010,col=cl,zlim=c(0,0.9))
+plot(alb.jan2020,col=cl,zlim=c(0,0.9))
 
 # confronto jul
 par(mfrow=c(1,3))
-plot(alb.jul2000,col=cl,zlim=c(0,0.7))
-plot(alb.jul2010,col=cl,zlim=c(0,0.7))
-plot(alb.jul2020,col=cl,zlim=c(0,0.7))
+plot(alb.jul2000,col=cl,zlim=c(0,0.9))
+plot(alb.jul2010,col=cl,zlim=c(0,0.9))
+plot(alb.jul2020,col=cl,zlim=c(0,0.9))
 
 # quantificare differenze albedo => se varia di più in inverno o estate, in che decennio il cambiamento è massimo
 dif1<-alb.jan2000-alb.jan2010
@@ -62,8 +62,8 @@ clsnow<-colorRampPalette(c('darkblue','blue','light blue'))(100)
 par(mfrow=c(2,2))
 plot(snow.multitemp$snow2000r,col=clsnow,zlim=c(0,250))
 plot(snow.multitemp$snow2020r,col=clsnow,zlim=c(0,250))
-plot(alb.x2000,col=cl,zlim=c(0,0.7))
-plot(alb.x2020,col=cl,zlim=c(0,0.7))
+plot(alb.x2000,col=cl,zlim=c(0,0.9))
+plot(alb.x2020,col=cl,zlim=c(0,0.9))
 
 # confronto differenze albedo-snow
 difsnow<-snow.multitemp$snow2020r-snow.multitemp$snow2000r
