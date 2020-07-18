@@ -42,11 +42,10 @@ dif1<-alb.jan2000-alb.jan2010
 dif2<-alb.jan2010-alb.jan2020
 dif3<-alb.jul2000-alb.jul2010
 dif4<-alb.jul2010-alb.jul2020
-cldif<-colorRampPalette(c('blue','white','red'))
-plot(dif1,col=cldif)
-plot(dif2,col=cldif)
-plot(dif3,col=cldif)
-plot(dif4,col=cldif)
+dif1
+dif2
+dif3
+dif4
 
 # differenza 2000-2020 nella stagione con cambio più evidente => confronto con dati snow usati a lezione
 difmax(alb.x2000-alb.x2020)
