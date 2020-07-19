@@ -23,7 +23,7 @@ cl<-colorRampPalette(c('red','orange','yellow'))(100)
 plot(alb.multitemp,col=cl,zlim=c(0,0.9)) # chiedere ad Aaron per titoli
 
 # boxplot -> vedere andamento
-boxplot(alb.multitemp,horizontal=T,outline=F)
+boxplot(alb.multitemp,horizontal=T,outline=F)   # fatica a caricarlo
 
 # confronto jan
 par(mfrow=c(1,3))
