@@ -12,10 +12,10 @@ alb.multitemp<-stack(list_rast)
 
 # rinominare i file per praticità
 alb.jan2000<-alb.multitemp$Broadband.directional.albedo.over.total.spectrum.1
-alb.jan2010<-alb.multitemp$Broadband.directional.albedo.over.total.spectrum.3
-alb.jan2020<-alb.multitemp$Broadband.directional.albedo.over.total.spectrum.5
-alb.jul2000<-alb.multitemp$Broadband.directional.albedo.over.total.spectrum.2
-alb.jul2010<-alb.multitemp$Broadband.directional.albedo.over.total.spectrum.4
+alb.jan2010<-alb.multitemp$Broadband.directional.albedo.over.total.spectrum.2
+alb.jan2020<-alb.multitemp$Broadband.directional.albedo.over.total.spectrum.3
+alb.jul2000<-alb.multitemp$Broadband.directional.albedo.over.total.spectrum.4
+alb.jul2010<-alb.multitemp$Broadband.directional.albedo.over.total.spectrum.5
 alb.jul2020<-alb.multitemp$Broadband.directional.albedo.over.total.spectrum.6
 
 # plot
