@@ -20,7 +20,7 @@ alb.jul2020<-alb.multitemp$Broadband.directional.albedo.over.total.spectrum.6
 
 # plot
 cl<-colorRampPalette(c('red','orange','yellow'))(100) 
-plot(alb.multitemp,col=cl,zlim=c(0,0.9)) # chiedere ad Aaron per titoli
+plot(alb.multitemp,col=cl,zlim=c(0,0.9))                  # omesso, con sei grafici troppo complicato
 
 # boxplot -> vedere andamento
 boxplot(alb.multitemp,horizontal=T,outline=F)   # fatica a caricarlo
@@ -37,26 +37,23 @@ plot(alb.jul2000,col=cl,zlim=c(0,0.9))
 plot(alb.jul2010,col=cl,zlim=c(0,0.9))
 plot(alb.jul2020,col=cl,zlim=c(0,0.9))
 
-# quantificare differenze albedo => se varia di più in inverno o estate, in che decennio il cambiamento è massimo
-dif1<-alb.jan2000-alb.jan2010
-dif2<-alb.jan2010-alb.jan2020
-dif3<-alb.jul2000-alb.jul2010
-dif4<-alb.jul2010-alb.jul2020
-dif1
-dif2
-dif3
-dif4
+# quantificare differenze albedo => variazione più evidente in estate o inverno
+dif1<-alb.jan2000-alb.jan2020
+dif2<-alb.jul2000-alb.jul2020
+cldif<-colorRampPalette(c('blue','white','red'))(100)
+par(mfrow=c(1,2))
+plot(dif1,col=cldif)
+plot(dif2,col=cldif)
 
-# differenza 2000-2020 nella stagione con cambio più evidente => confronto con dati snow usati a lezione
-difmax(alb.x2000-alb.x2020)
-plot(difmax,col=cldif)
+# potrebbe essere interessante crop su deserto del Sahara
 
+# confronto con copertura nevosa => atteso pattern simile
 # importare raster copertura nevosa
 snowlist<-list.files(pattern="snow",full.names=T)
 list_snow<-lapply(snowlist,raster)
 snow.multitemp<-stack(list_snow)
 
-# confronto con copertura nevosa
+# confronto
 clsnow<-colorRampPalette(c('darkblue','blue','light blue'))(100) 
 par(mfrow=c(2,2))
 plot(snow.multitemp$snow2000r,col=clsnow,zlim=c(0,250))
@@ -67,7 +64,7 @@ plot(alb.x2020,col=cl,zlim=c(0,0.9))
 # confronto differenze albedo-snow
 difsnow<-snow.multitemp$snow2020r-snow.multitemp$snow2000r
 par(mfrow=c(1,2))
-plot(difmax,col=cldif)
+plot(dif1/2,col=cldif)
 plot(difsnow,col=cldif)
 
 # crop arco alpino (albedo e snow)
