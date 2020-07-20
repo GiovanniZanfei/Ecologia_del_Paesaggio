@@ -43,7 +43,7 @@ dif2<-alb.jul2000-alb.jul2020
 cldif<-colorRampPalette(c('blue','white','red'))(100)  # in rosso calo albedo, in blu aumento    
 par(mfrow=c(1,2))
 plot(dif1,col=cldif)
-plot(dif2,col=cldif) # cal albedo più evidente nella stagione estiva
+plot(dif2,col=cldif)                                   # calo albedo più evidente nella stagione estiva
 
 # confronto con copertura nevosa => atteso pattern simile
 # importare raster copertura nevosa
@@ -56,13 +56,13 @@ clsnow<-colorRampPalette(c('darkblue','blue','light blue'))(100)
 par(mfrow=c(2,2))
 plot(snow.multitemp$snow2000r,col=clsnow,zlim=c(0,250))
 plot(snow.multitemp$snow2020r,col=clsnow,zlim=c(0,250))
-plot(alb.x2000,col=cl,zlim=c(0,0.9))
-plot(alb.x2020,col=cl,zlim=c(0,0.9))
+plot(alb.jul2000,col=cl,zlim=c(0,0.9))
+plot(alb.jul2020,col=cl,zlim=c(0,0.9))
 
 # confronto differenze albedo-snow
 difsnow<-snow.multitemp$snow2020r-snow.multitemp$snow2000r
 par(mfrow=c(1,2))
-plot(dif1/2,col=cldif)
+plot(dif2,col=cldif)
 plot(difsnow,col=cldif)
 
 # crop arco alpino (albedo e snow)
