@@ -20,27 +20,24 @@ alb.jul2020<-alb.multitemp$Broadband.directional.albedo.over.total.spectrum.6
 
 # plot
 cl<-colorRampPalette(c('red','orange','yellow'))(100) 
-plot(alb.multitemp,col=cl,zlim=c(0,0.9))                  # omesso, con sei grafici troppo complicato
-
-# boxplot -> vedere andamento
-boxplot(alb.multitemp,horizontal=T,outline=F)   # fatica a caricarlo
+plot(alb.multitemp,col=cl,zlim=c(0,1))                # omesso, con sei grafici troppo complicato, la mia palette fa schifo
 
 # confronto jan
 par(mfrow=c(1,3))
-plot(alb.jan2000,col=cl,zlim=c(0,0.9))
-plot(alb.jan2010,col=cl,zlim=c(0,0.9))
-plot(alb.jan2020,col=cl,zlim=c(0,0.9))
+plot(alb.jan2000,zlim=c(0,1))
+plot(alb.jan2010,zlim=c(0,1))
+plot(alb.jan2020,zlim=c(0,1))
 
 # confronto jul
 par(mfrow=c(1,3))
-plot(alb.jul2000,col=cl,zlim=c(0,0.9))
-plot(alb.jul2010,col=cl,zlim=c(0,0.9))
-plot(alb.jul2020,col=cl,zlim=c(0,0.9))
+plot(alb.jul2000,zlim=c(0,1))
+plot(alb.jul2010,zlim=c(0,1))
+plot(alb.jul2020,zlim=c(0,1))
 
 # quantificare differenze albedo => variazione più evidente in estate o inverno
 dif1<-alb.jan2000-alb.jan2020
 dif2<-alb.jul2000-alb.jul2020
-cldif<-colorRampPalette(c('blue','white','red'))(100)  # in rosso calo albedo, in blu aumento    
+cldif<-colorRampPalette(c('blue','white','red'))(100)  # blu -> calo, bianco -> stabile, rosso -> aumento    
 par(mfrow=c(1,2))
 plot(dif1,col=cldif)
 plot(dif2,col=cldif)                                   # calo albedo più evidente nella stagione estiva
@@ -56,8 +53,8 @@ clsnow<-colorRampPalette(c('darkblue','blue','light blue'))(100)
 par(mfrow=c(2,2))
 plot(snow.multitemp$snow2000r,col=clsnow,zlim=c(0,250))
 plot(snow.multitemp$snow2020r,col=clsnow,zlim=c(0,250))
-plot(alb.jul2000,col=cl,zlim=c(0,0.9))
-plot(alb.jul2020,col=cl,zlim=c(0,0.9))
+plot(alb.jul2000,zlim=c(0,1))
+plot(alb.jul2020,zlim=c(0,1))
 
 # confronto differenze albedo-snow
 difsnow<-snow.multitemp$snow2020r-snow.multitemp$snow2000r
@@ -66,7 +63,7 @@ plot(dif2,col=cldif)
 plot(difsnow,col=cldif)
 
 # crop arco alpino (albedo e snow)
-extension<-c(6,20,a,b)
+extension<-c(6,20,45,50)
 dif.alb.alps<-crop(difmax,extension)
 dif.snow.alps<-crop(difsnow,extension)
 par(mfrow=c(1,2))
