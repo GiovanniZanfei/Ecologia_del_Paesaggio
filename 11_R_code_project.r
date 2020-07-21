@@ -90,3 +90,10 @@ difsnow<-snow.multitemp$snow2000-snow.multitemp$snow2020
 par(mfrow=c(2,2))
 plot(dif3,col=cldif)
 plot(difsnow,col=cldif)
+
+# crop Alpi differenze
+alb.dif.alps<-crop(dif3,extension)
+snow.dif.alps<-crop(difsnow,extension)
+par(mfrow=c(1,2))
+plot(alb.dif.alps,col=cldif)
+plot(snow.dif.alps,col=cldif)
