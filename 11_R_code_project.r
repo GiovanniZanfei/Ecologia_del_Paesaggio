@@ -1,4 +1,4 @@
-### 11_R_code_examproject.r
+### 11_R_code_project.r
 
 # setwd e pacchetti
 setwd("C:/lab/exam")
@@ -98,4 +98,4 @@ snow.dif.alps<-crop(difsnow,extension)
 par(mfrow=c(1,2))
 plot(alb.dif.alps,col=cldif)
 plot(snow.dif.alps,col=cldif)
-# differenza molto più evidente a livello di copertura nevosa
+# differenza molto più evidente a livello di copertura nevosa (ovvio)
