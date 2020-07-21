@@ -63,7 +63,7 @@ plot(dif2,col=cldif)
 plot(difsnow,col=cldif)
 
 # crop arco alpino (albedo e snow)
-extension<-c(6,20,45,50)
+extension<-c(0,20,42,50)
 dif.alb.alps<-crop(difmax,extension)
 dif.snow.alps<-crop(difsnow,extension)
 par(mfrow=c(1,2))
