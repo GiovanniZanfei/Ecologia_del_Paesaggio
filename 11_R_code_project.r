@@ -60,6 +60,7 @@ cldif<-colorRampPalette(c('blue','white','red'))(100)
 par(mfrow=c(1,2))
 plot(dif1,col=cldif)
 plot(dif2,col=cldif)
+# mi spettavo differenze più evidenti, forse lettura errata
 
 # confronto con copertura nevosa => attesi pattern in linea
 # importare raster copertura nevosa
@@ -97,3 +98,4 @@ snow.dif.alps<-crop(difsnow,extension)
 par(mfrow=c(1,2))
 plot(alb.dif.alps,col=cldif)
 plot(snow.dif.alps,col=cldif)
+# differenza molto più evidente a livello di copertura nevosa
