@@ -40,7 +40,26 @@ dif2<-alb.jul2000-alb.jul2020
 cldif<-colorRampPalette(c('blue','white','red'))(100)  # blu -> calo, bianco -> stabile, rosso -> aumento    
 par(mfrow=c(1,2))
 plot(dif1,col=cldif)
-plot(dif2,col=cldif)                                   
+plot(dif2,col=cldif)  
+
+# crop arco alpino, inverno
+extension<-c(0,20,42,50)
+alb.alps.2000.jan<-crop(alb.jan2000,extension)
+alb.alps.2000.jan<-crop(alb.jan2010,extension)
+alb.alps.2020.jan<-crop(alb.jan2020,extension)
+par(mfrow=c(1,3))
+plot(alb.alps.2000.jan,zlim=c(0,1))
+plot(alb.alps.2010.jan,zlim=c(0,1))
+plot(alb.alps.2020.jan,zlim=c(0,1))
+
+# crop arco apino estivo
+alb.alps.2000.jul<-crop(alb.jul2000,extension)
+alb.alps.2000.jul<-crop(alb.jul2010,extension)
+alb.alps.2020.jul<-crop(alb.jul2020,extension)
+par(mfrow=c(1,3))
+plot(alb.alps.2000.jul,zlim=c(0,1))
+plot(alb.alps.2010.jul,zlim=c(0,1))
+plot(alb.alps.2020.jul,zlim=c(0,1))
 
 # confronto con copertura nevosa => attesi pattern in linea
 # importare raster copertura nevosa
