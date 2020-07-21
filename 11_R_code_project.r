@@ -56,6 +56,10 @@ plot(alb.alps.2020.jul,zlim=c(0,1))
 # differenze nell'albedo inverno-estate negli anni
 dif1->albjan2000-albjul2000
 dif2->albjan2020-albjul2020
+cldif<-colorRampPalette(c('blue','white','red'))(100)
+par(mfrow=c(1,2))
+plot(dif1,col=cldif)
+plot(dif2,col=cldif)
 
 # confronto con copertura nevosa => attesi pattern in linea
 # importare raster copertura nevosa
