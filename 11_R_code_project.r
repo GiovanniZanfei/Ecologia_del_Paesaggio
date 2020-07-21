@@ -54,8 +54,8 @@ plot(alb.alps.2010.jul,zlim=c(0,1))
 plot(alb.alps.2020.jul,zlim=c(0,1))
 
 # differenze nell'albedo inverno-estate negli anni
-dif1->albjan2000-albjul2000
-dif2->albjan2020-albjul2020
+dif1<-albjan.2000-albjul.2000
+dif2<-albjan.2020-albjul.2020
 cldif<-colorRampPalette(c('blue','white','red'))(100)
 par(mfrow=c(1,2))
 plot(dif1,col=cldif)
@@ -84,11 +84,7 @@ plot(alb.alps.2020.jul,zlim=c(0,1))
 plot(snow.alps.2000,col=clsnow,zlim=c(0,250))
 plot(snow.alps.2020,col=clsnow,zlim=c(0,250))
 
-# confronto differenze albedo-snow (uso differenza estiva perchè meno soggetta a variabili stocastiche => conta meno se ha nevicato o no)
-difsnow<-snow.multitemp$snow2020r-snow.multitemp$snow2000r
-par(mfrow=c(1,2))
-plot(dif2,col=cldif)
-plot(difsnow,col=cldif)
+
 
 
 
