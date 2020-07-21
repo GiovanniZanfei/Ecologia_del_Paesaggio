@@ -42,7 +42,7 @@ par(mfrow=c(1,2))
 plot(dif1,col=cldif)
 plot(dif2,col=cldif)                                   
 
-# confronto con copertura nevosa => atteso pattern simile
+# confronto con copertura nevosa => attesi pattern in linea
 # importare raster copertura nevosa
 snowlist<-list.files(pattern="snow",full.names=T)
 list_snow<-lapply(snowlist,raster)
@@ -56,7 +56,7 @@ plot(snow.multitemp$snow2020r,col=clsnow,zlim=c(0,250))
 plot(alb.jan2000,zlim=c(0,1))
 plot(alb.jan2020,zlim=c(0,1))
 
-# confronto differenze albedo-snow
+# confronto differenze albedo-snow (uso differenza estiva perchè meno soggetta a variabili stocastiche => conta meno se ha nevicato o no)
 difsnow<-snow.multitemp$snow2020r-snow.multitemp$snow2000r
 par(mfrow=c(1,2))
 plot(dif2,col=cldif)
