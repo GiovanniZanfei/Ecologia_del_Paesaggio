@@ -86,7 +86,7 @@ plot(snow.alps.2020,col=clsnow,zlim=c(0,250))
 
 # confronto tra differenze 2000-2020 albedo e snow
 dif3<-alb.jan2000-alb.jan2020
-difsnow<-snow.multitemp$snow2000-snow.multitemp$snow2020
+difsnow<-snow.multitemp$snow2000r-snow.multitemp$snow2020r
 par(mfrow=c(2,2))
 plot(dif3,col=cldif)
 plot(difsnow,col=cldif)
