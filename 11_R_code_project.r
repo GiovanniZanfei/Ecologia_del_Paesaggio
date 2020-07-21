@@ -75,19 +75,22 @@ plot(snow.multitemp$snow2020r,col=clsnow,zlim=c(0,250))
 plot(alb.jan2000,zlim=c(0,1))
 plot(alb.jan2020,zlim=c(0,1))
 
+# crop arco alpino (albedo e snow)
+snow.alps.2000<-crop(snow.multitemp$snow2000r,extension)
+snow.alps.2020<-crop(snow.multitemp$snow2020r,extension)
+par(mfrow=c(2,2))
+plot(alb.alps.2000.jul,zlim=c(0,1))
+plot(alb.alps.2020.jul,zlim=c(0,1))
+plot(snow.alps.2000,col=clsnow,zlim=c(0,250))
+plot(snow.alps.2020,col=clsnow,zlim=c(0,250))
+
 # confronto differenze albedo-snow (uso differenza estiva perchè meno soggetta a variabili stocastiche => conta meno se ha nevicato o no)
 difsnow<-snow.multitemp$snow2020r-snow.multitemp$snow2000r
 par(mfrow=c(1,2))
 plot(dif2,col=cldif)
 plot(difsnow,col=cldif)
 
-# crop arco alpino (albedo e snow)
-extension<-c(0,20,42,50)
-dif.alb.alps<-crop(difmax,extension)
-dif.snow.alps<-crop(difsnow,extension)
-par(mfrow=c(1,2))
-plot(dif.alb.alps,col=cldif)
-plot(dif.snow.alps,col=cldif)
+
 
 
 
