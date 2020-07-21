@@ -34,14 +34,6 @@ plot(alb.jul2000,zlim=c(0,1))
 plot(alb.jul2010,zlim=c(0,1))
 plot(alb.jul2020,zlim=c(0,1))
 
-# quantificare differenze albedo => variazione più evidente in estate o inverno
-dif1<-alb.jan2000-alb.jan2020
-dif2<-alb.jul2000-alb.jul2020
-cldif<-colorRampPalette(c('blue','white','red'))(100)  # blu -> calo, bianco -> stabile, rosso -> aumento    
-par(mfrow=c(1,2))
-plot(dif1,col=cldif)
-plot(dif2,col=cldif)  
-
 # crop arco alpino, inverno
 extension<-c(0,20,42,50)
 alb.alps.2000.jan<-crop(alb.jan2000,extension)
@@ -60,6 +52,10 @@ par(mfrow=c(1,3))
 plot(alb.alps.2000.jul,zlim=c(0,1))
 plot(alb.alps.2010.jul,zlim=c(0,1))
 plot(alb.alps.2020.jul,zlim=c(0,1))
+
+# differenze nell'albedo inverno-estate negli anni
+dif1->albjan2000-albjul2000
+dif2->albjan2020-albjul2020
 
 # confronto con copertura nevosa => attesi pattern in linea
 # importare raster copertura nevosa
