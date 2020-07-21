@@ -54,8 +54,8 @@ plot(alb.alps.2010.jul,zlim=c(0,1))
 plot(alb.alps.2020.jul,zlim=c(0,1))
 
 # differenze nell'albedo inverno-estate negli anni
-dif1<-albjul.2000-albjan.2000
-dif2<-albjul.2020-albjan.2020
+dif1<-albjan.2000-albjul.2000
+dif2<-albjan.2020-albjul.2020
 cldif<-colorRampPalette(c('blue','white','red'))(100)
 par(mfrow=c(1,2))
 plot(dif1,col=cldif)
